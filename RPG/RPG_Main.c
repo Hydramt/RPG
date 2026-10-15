@@ -1,3 +1,13 @@
+/**
+ * @file RPG_Main.c
+ * @author Gavin O. +
+ * @brief RPG_Game
+ * @version 0.1
+ * @date 2026-10-15
+ *
+ * @copyright Copyright (c) 2026
+ *
+ */
 #include "RPG_Assets.h"
 #include "RPG_Subfunctions.h"
 #include <stdio.h>

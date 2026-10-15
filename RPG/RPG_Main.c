@@ -1,6 +1,5 @@
 #include "RPG_Assets.h"
-#include "RPG_Battle_Subfunctions.h"
-#include "RPG_Spells+Items.h"
+#include "RPG_Subfunctions.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,7 +52,11 @@ int combat(
         /**
          * @brief For counting how many items the player has
          */
-        item_check = 0;
+        item_check = 0,
+        /**
+         * @brief For checking if the hero has had a turn yet
+         */
+        battle_check = 0;
 
     // Determine number of spells before combat starts
     while (magic_check == 0) {
@@ -95,7 +98,7 @@ int combat(
 
         if (player_choice == 1) {
             Hero[0][6] = Hero[0][4];
-            damage_calculator(Hero, Monster);
+            battle_check = 1;
         } else if (player_choice == 2) {
 
             // Make Options for each Magic attack
@@ -128,8 +131,11 @@ int combat(
                         spells(Hero[3][player_choice - 1], 0, Hero, Monster)
                     );
                     spells(Hero[3][player_choice - 1], 1, Hero, Monster);
+                    battle_check = 1;
                     input_sticker = 0;
-                } else {
+                }
+                // If the player inputted a incorrect input return Invalid Input
+                else {
                     printf("Invalid Input\n");
                 }
 
@@ -196,7 +202,10 @@ int combat(
                     }
                     // Then set the last one to 0 (Empty)
                     item_check--;
+                    // Allows player to leave
                     input_sticker = 0;
+                    // Allows the enemy to retaliate
+                    battle_check = 1;
                 }
 
                 // Reset count
@@ -207,6 +216,40 @@ int combat(
             // no random chance during testing
             cowardice = 1;
             Monster[0][0] = 0;
+        }
+
+        // Check if the Hero attacked
+        if (battle_check == 1) {
+            Monster[0][6] = Monster[0][4];
+            Monster[0][7] = Monster[0][5];
+            Hero[0][7] = Hero[0][5];
+            // Apply buffs and debuffs
+            buffs_debuffs(Hero, Monster);
+            damage_calculator(Hero, Monster);
+            // If they did and the monster is alive The Monster attacks
+            if (Monster[0][0] > 0) {
+                monster_ai(Hero, Monster);
+            }
+            // If the monster is dead play death message
+            else {
+                death(Monster[0][8]);
+                battle_check = 0;
+            }
+
+            // If the monster is dead play death message
+            if (Monster[0][0] <= 0 && battle_check == 1) {
+                death(Monster[0][8]);
+            }
+            battle_check = 0;
+            // Print known stats
+            printf("Monster Hp:%d\n", Monster[0][0]);
+            printf("Monster Mp:%d\n", Monster[0][2]);
+            printf("Hero Hp:%d\n", Hero[0][0]);
+            printf("Hero Mp:%d\n", Hero[0][2]);
+            Hero[0][6] = 0;
+            Monster[0][6] = 0;
+            Hero[0][7] = 0;
+            Monster[0][7] = 0;
         }
     }
 }

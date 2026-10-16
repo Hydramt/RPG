@@ -14,8 +14,20 @@
 #include <string.h>
 #include <time.h>
 
-const char*
-items(int item, int description, int Hero[6][10], int Monster[4][10]) {
+const char* items(
+    int item, int description,
+    /**
+     * @brief The Hero as a 2d array
+     *
+     * @param 0 Stats 0-hp 1-maxhp 2-mp 3-maxmp 4-atk 5-def 6-tempatk 7-tempdef
+     * 8-lvl 9-exp
+     * @param 1 Buffs 0-Stone_Skin 1-Frenzy
+     * @param 2 Debuffs 0-Burn 1-Poison
+     * @param 3 Spells
+     * @param 4 Items
+     */
+    Player* const Hero, Opponent* const Enemy
+) {
     // Checks list of spells for names and effects
 
     // Item Name Hp Potion
@@ -23,7 +35,7 @@ items(int item, int description, int Hero[6][10], int Monster[4][10]) {
         if (description == 0) {
             return "Hp Potion";
         } else {
-            Hero[0][6] = -20;
+            Hero->stats.temp_atk = -20;
         }
 
     }
@@ -33,9 +45,9 @@ items(int item, int description, int Hero[6][10], int Monster[4][10]) {
         if (description == 0) {
             return "Mp Potion";
         } else {
-            Hero[0][2] = Hero[0][2] + 20;
-            if (Hero[0][2] > Hero[0][3]) {
-                Hero[0][2] = Hero[0][3];
+            Hero->stats.mp = Hero->stats.mp + 20;
+            if (Hero->stats.mp > Hero->stats.max_mp) {
+                Hero->stats.mp = Hero->stats.max_mp;
                 printf("The Hero restored their Mp to Max\n");
             } else {
                 printf("The Hero restored 20Mp\n");
@@ -48,7 +60,7 @@ items(int item, int description, int Hero[6][10], int Monster[4][10]) {
         if (description == 0) {
             return "Ice Potion";
         } else {
-            Hero[0][6] = 15;
+            Hero->stats.temp_atk = 15;
         }
     }
 }

@@ -15,7 +15,7 @@ int buffs_debuffs(
      * @param 3 Spells
      * @param 4 Items
      */
-    int Hero[6][10],
+    Player* const Hero,
     /**
      * @brief The Monster as a 2d array
      *
@@ -25,81 +25,95 @@ int buffs_debuffs(
      * @param 2 Debuff Storage 0-Burn 1-Poison
      * @param 3 Gimmicks 0-Burn_Heal 1-Poison_Heal
      */
-    int Monster[4][10]
+    Opponent* const Enemy
 ) {
 
     // Hero buffs
     // if Hero has Stone Skin, apply Stone Skin (+3def)
-    if (Hero[1][0] > 0) {
+    if (Hero->buff.stone_skin > 0) {
         printf("The Hero's skin was tough!\n");
-        Hero[0][7] = Hero[0][7] + 3;
+        Hero->stats.temp_def = Hero->stats.temp_def + 3;
     }
     // if Hero has Frenzy, apply Frenzy (x2dmg)
-    if (Hero[1][1] > 0) {
+    if (Hero->buff.frenzy > 0) {
         printf("The Hero is in a Frenzy!\n");
-        Hero[0][6] = Hero[0][6] * 2;
+        Hero->stats.temp_atk = Hero->stats.temp_atk * 2;
     }
 
     // Hero debuffs
     // if Hero has burn, apply burn (-5hp x0.75dmg)
-    if (Hero[2][0] > 0) {
+    if (Hero->debuff.burn > 0) {
         printf("The Hero was burned!\n");
-        Hero[0][6] = Hero[0][6] * 0.75;
-        Hero[0][0] = Hero[0][0] - 5;
+        Hero->stats.temp_atk = Hero->stats.temp_atk * 0.75;
+        Hero->stats.hp = Hero->stats.hp - 5;
     }
     // if Hero has poison, apply poison (-10hp)
-    if (Hero[2][1] > 0) {
+    if (Hero->debuff.poison > 0) {
         printf("The Hero was poisoned!\n");
-        Hero[0][0] = Hero[0][0] - Hero[2][1];
+        Hero->stats.hp = Hero->stats.hp - Hero->debuff.poison;
     }
 
     // Monster buffs
     // if Monster has Stone Skin, apply Stone Skin (+3def)
-    if (Monster[1][0] > 0) {
+    if (Enemy->buff.stone_skin > 0) {
         printf("The Monster's skin was tough!\n");
-        Monster[0][7] = Monster[0][7] + 3;
+        Enemy->stats.temp_def = Enemy->stats.temp_def + 3;
     }
     // if Monster has Frenzy, apply Frenzy (x2dmg)
-    if (Monster[1][1] > 0) {
+    if (Enemy->buff.frenzy > 0) {
         printf("The Monster is in a Frenzy!\n");
-        Monster[0][6] = Monster[0][6] * 2;
+        Enemy->stats.temp_atk = Enemy->stats.temp_atk * 2;
     }
 
     // Monster debuffs
     // Check if Monster has burn
-    if (Monster[2][0] > 0) {
+    if (Enemy->debuff.burn > 0) {
         // if Monster has burn absorb (+5 x1.5dmg)
-        if (Monster[3][0] == 1) {
+        if (Enemy->gimmick.burn_absorb == 1) {
             printf("Monster absorbed the fire!\n");
-            Monster[0][6] = Monster[0][6] * 1.5;
-            Monster[0][0] = Monster[0][0] + 5;
+            Enemy->stats.temp_atk = Enemy->stats.temp_atk * 1.5;
+            Enemy->stats.hp = Enemy->stats.hp + 5;
         }
         // if Monster has burn, apply burn (-5hp x0.75dmg)
         else {
             printf("Monster was burned!\n");
-            Monster[0][6] = Monster[0][6] * 0.75;
-            Monster[0][0] = Monster[0][0] - 5;
+            Enemy->stats.temp_atk = Enemy->stats.temp_atk * 0.75;
+            Enemy->stats.hp = Enemy->stats.hp - 5;
         }
     }
     // if Monster has poison, apply poison (-10hp)
-    if (Monster[2][1] > 0) {
+    if (Enemy->debuff.poison > 0) {
         printf("Monster was poisoned!\n");
-        Monster[0][0] = Monster[0][0] - Monster[2][1];
+        Enemy->stats.hp = Enemy->stats.hp - Enemy->debuff.poison;
     }
 
     // Deincrement buffs and debuffs by 1
-    for (int i = 0; i < 10; i++) {
-        if (Hero[1][i] > 0) {
-            Hero[1][i]--;
-        }
-        if (Hero[2][i] > 0) {
-            Hero[2][i]--;
-        }
-        if (Monster[1][i] > 0) {
-            Monster[1][i]--;
-        }
-        if (Monster[2][i] > 0) {
-            Monster[2][i]--;
-        }
+
+    // Hero Buffs/Debuffs
+    if (Hero->buff.frenzy > 0) {
+        Hero->buff.frenzy--;
+    }
+    if (Hero->buff.stone_skin > 0) {
+        Hero->buff.stone_skin--;
+    }
+    if (Hero->debuff.burn > 0) {
+        Hero->debuff.burn--;
+    }
+    if (Hero->debuff.poison > 0) {
+        Hero->debuff.poison--;
+    }
+
+    // Enemy Buffs/Debuffs
+    if (Enemy->buff.frenzy > 0) {
+        Enemy->buff.frenzy--;
+    }
+    if (Enemy->buff.stone_skin > 0) {
+        Enemy->buff.stone_skin--;
+    }
+    if (Enemy->debuff.burn > 0) {
+        Enemy->debuff.burn--;
+    }
+    if (Enemy->debuff.poison > 0) {
+        Enemy->debuff.poison--;
     }
 }

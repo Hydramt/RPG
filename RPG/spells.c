@@ -15,8 +15,20 @@ int check(int grab) {
     }
 }
 
-const char*
-spells(int spell, int description, int Hero[6][10], int Monster[4][10]) {
+const char* spells(
+    int spell, int description,
+    /**
+     * @brief The Hero as a 2d array
+     *
+     * @param 0 Stats 0-hp 1-maxhp 2-mp 3-maxmp 4-atk 5-def 6-tempatk 7-tempdef
+     * 8-lvl 9-exp
+     * @param 1 Buffs 0-Stone_Skin 1-Frenzy
+     * @param 2 Debuffs 0-Burn 1-Poison
+     * @param 3 Spells
+     * @param 4 Items
+     */
+    Player* const Hero, Opponent* const Enemy
+) {
     // Checks list of spells for names and effects
 
     // Spell Name Check
@@ -25,8 +37,8 @@ spells(int spell, int description, int Hero[6][10], int Monster[4][10]) {
             return "Check";
         } else {
             // Drink 5 mana
-            Hero[0][2] = Hero[0][2] - 5;
-            check(Monster[0][8]);
+            Hero->stats.mp = Hero->stats.mp - 5;
+            check(Enemy->stats.enemy_type);
         }
     }
 
@@ -36,13 +48,13 @@ spells(int spell, int description, int Hero[6][10], int Monster[4][10]) {
             return "Firebolt";
         } else {
             // Deal 10 damage
-            Hero[0][6] = 10;
+            Hero->stats.temp_atk = 10;
             // Drink 10 mana
-            Hero[0][2] = Hero[0][2] - 10;
+            Hero->stats.mp = Hero->stats.mp - 10;
 
             // 33% chance to burn for 3 turns
             if (rand() % 3 > 1) {
-                Monster[2][0] = Monster[2][0] + 3;
+                Enemy->debuff.burn = Enemy->debuff.burn + 3;
             }
         }
     }
@@ -53,9 +65,9 @@ spells(int spell, int description, int Hero[6][10], int Monster[4][10]) {
             return "Stone Skin";
         } else {
             // Get Stone Skin for 4 turns
-            Hero[1][0] = Hero[1][0] + 4;
+            Hero->buff.stone_skin = Hero->buff.stone_skin + 4;
             // Drink 20 mana
-            Hero[0][2] = Hero[0][2] - 20;
+            Hero->stats.mp = Hero->stats.mp - 20;
         }
     }
 
@@ -65,12 +77,12 @@ spells(int spell, int description, int Hero[6][10], int Monster[4][10]) {
             return "Poison Shot";
         } else {
             // Deal 5 damage
-            Hero[0][6] = 5;
+            Hero->stats.temp_atk = 5;
             // Drink 10 mana
-            Hero[0][2] = Hero[0][2] - 10;
+            Hero->stats.mp = Hero->stats.mp - 10;
 
             // Applies 3 poison
-            Monster[2][1] = Monster[2][1] + 3;
+            Enemy->debuff.poison = Enemy->debuff.poison + 3;
         }
     }
 }

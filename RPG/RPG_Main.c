@@ -85,7 +85,7 @@ int main(void) {
      * @brief The structure to contain the Enemy
      */
     Opponent Enemy;
-    // In case the Enemy isn't chosen properly
+    // In case the Enemy isn't chosen properly set Enemy hp to 0
     Enemy.stats.hp = 0;
 
     // Set Enemy's Buffs/Debuffs starting at 0
@@ -159,6 +159,7 @@ int main(void) {
 
         // if you killed the Enemy and didn't run away you win!
         if (Enemy.stats.hp <= 0 && cowardice > 0) {
+            printf("You Win!");
             win = 1;
         }
     }

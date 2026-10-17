@@ -7,24 +7,11 @@
 
 int enemy_ai(
     /**
-     * @brief The Hero as a 2d array
-     *
-     * @param 0 Stats 0-hp 1-maxhp 2-mp 3-maxmp 4-atk 5-def 6-tempatk 7-tempdef
-     * 8-lvl 9-exp
-     * @param 1 Buffs 0-Stone_Skin 1-Frenzy
-     * @param 2 Debuffs 0-Burn 1-Poison
-     * @param 3 Spells
-     * @param 4 Items
+     * @brief The Structure to contain the player character
      */
     Player* const Hero,
     /**
-     * @brief The Enemy as a 2d array
-     *
-     * @param 0 Stats 0-hp 1-maxhp 2-mp 3-maxmp 4-atk 5-def 6-tempatk 7-tempdef
-     * 8-Montype
-     * @param 1 Buff Storage 0-Stone_Skin 1-Frenzy
-     * @param 2 Debuff Storage 0-Burn 1-Poison
-     * @param 3 Gimmicks 0-Burn_Heal 1-Poison_Heal
+     * @brief The Structure to contain the enemy
      */
     Opponent* const Enemy
 ) {
@@ -33,8 +20,8 @@ int enemy_ai(
     if (Enemy->stats.enemy_type == 1) {
         // The Bunny makes a random choice between 1 abd 4
         int decision = (rand() % 4) + 1;
-        // If Bunny is at half health and has 20 mana, it burns it to enter a
-        // Frenzy
+        // If Bunny is at half health and has 20 mana
+        // It burns 20 mp to enter a Frenzy
         if ((Enemy->stats.hp <= (Enemy->stats.max_hp / 2)) &&
             Enemy->stats.mp >= 20) {
             printf("Mad Bunny entered a Frenzy!");

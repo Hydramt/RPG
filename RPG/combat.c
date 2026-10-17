@@ -92,6 +92,7 @@ int combat(
         if (player_choice == 1) {
             // The player attacks and sets the enemy to retaliate
             Hero->stats.temp_atk = Hero->stats.atk;
+            Hero->stats.temp_def = Hero->stats.def;
             battle_check = 1;
         }
 
@@ -131,8 +132,16 @@ int combat(
                         "The Hero cast %s\n",
                         spells(Hero->spell[player_choice - 1], 0, Hero, Enemy)
                     );
+
+                    // Put the hero's temp def to his actual defense
+                    // Incase the hero uses a defense boosting spell
+                    Hero->stats.temp_def = Hero->stats.def;
+
+                    // Cast the spell
                     spells(Hero->spell[player_choice - 1], 1, Hero, Enemy);
+                    // Allow the enemy to retaliate
                     battle_check = 1;
+                    // Allow the player to leave the menu
                     input_sticker = 0;
                 }
 
@@ -196,14 +205,19 @@ int combat(
                             Enemy
                         )
                     );
+
+                    // Put the hero's temp def to his actual defense
+                    // Incase the hero uses a defense boosting item
+                    Hero->stats.temp_def = Hero->stats.def;
                     items(
                         Hero->item.item_id[player_choice - 1], 1, Hero, Enemy
                     );
 
-                    // Make all the Items above the used one slide down a
-                    // slot
+                    // If the choice is not in the last slot
+                    // And the amount of items in it is 1
                     if ((player_choice != item_check) &&
                         (Hero->item.item_amount[player_choice - 1] == 1)) {
+                        // Move the items down one
                         for (int x = player_choice - 1; x < item_check; x++) {
                             Hero->item.item_id[x] = Hero->item.item_id[x + 1];
                             Hero->item.item_stackable[x] =
@@ -212,16 +226,24 @@ int combat(
                                 Hero->item.item_amount[x + 1];
                             count++;
                         }
+                        // Erase the last item
                         Hero->item.item_id[count] = 0;
                         Hero->item.item_stackable[count] = 0;
                         Hero->item.item_amount[count] = 0;
                         item_check--;
-                    } else if (Hero->item.item_amount[player_choice - 1] == 1) {
+                    }
+
+                    // Else if the item has one left and is in the last slot
+                    else if (Hero->item.item_amount[player_choice - 1] == 1) {
+                        // Erase it
                         Hero->item.item_id[player_choice - 1] = 0;
                         Hero->item.item_stackable[player_choice - 1] = 0;
                         Hero->item.item_amount[player_choice - 1] = 0;
                         item_check--;
-                    } else {
+                    }
+
+                    // Otherwise use one
+                    else {
                         Hero->item.item_amount[player_choice - 1]--;
                     }
                     // Allows player to leave
@@ -234,20 +256,28 @@ int combat(
                 count = 0;
             }
             input_sticker = 1;
-        } else if (player_choice == 4) {
-            // no random chance during testing
-            cowardice = 1;
-            Enemy->stats.hp = 0;
+        }
+
+        // If the player chose 4
+        else if (player_choice == 4) {
+            // They run away with cowardice
+            cowardice = 0;
+            return 0;
         }
 
         // Check if the Hero attacked
         if (battle_check == 1) {
+            // Set the enemy temp attack and temp defense
+            // Equal to their actual atk and def
             Enemy->stats.temp_atk = Enemy->stats.atk;
             Enemy->stats.temp_def = Enemy->stats.def;
-            Hero->stats.temp_def = Hero->stats.def;
+
             // Apply buffs and debuffs
             buffs_debuffs(Hero, Enemy);
+
+            // Apply Hero damage and effects
             damage_calculator(Hero, Enemy);
+
             // If they did and the Enemy is alive The Enemy attacks
             if (Enemy->stats.hp > 0) {
                 enemy_ai(Hero, Enemy);
@@ -255,23 +285,21 @@ int combat(
             // If the Enemy is dead play death message
             else {
                 death(Enemy->stats.enemy_type);
-                battle_check = 0;
             }
 
-            // If the Enemy is dead play death message
-            if (Enemy->stats.hp <= 0 && battle_check == 1) {
-                death(Enemy->stats.enemy_type);
-            }
             battle_check = 0;
             // Print known stats
             printf("Enemy Hp:%d\n", Enemy->stats.hp);
             printf("Enemy Mp:%d\n", Enemy->stats.mp);
             printf("Hero Hp:%d\n", Hero->stats.hp);
             printf("Hero Mp:%d\n", Hero->stats.mp);
+
+            // Reset temporary stats
             Hero->stats.temp_atk = 0;
             Enemy->stats.temp_atk = 0;
             Hero->stats.temp_def = 0;
             Enemy->stats.temp_def = 0;
         }
     }
+    return 1;
 }

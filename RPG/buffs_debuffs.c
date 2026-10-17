@@ -4,29 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int buffs_debuffs(
-    /**
-     * @brief The Hero as a 2d array
-     *
-     * @param 0 Stats 0-hp 1-maxhp 2-mp 3-maxmp 4-atk 5-def 6-tempatk 7-tempdef
-     * 8-lvl 9-exp
-     * @param 1 Buffs 0-Stone_Skin 1-Frenzy
-     * @param 2 Debuffs 0-Burn 1-Poison
-     * @param 3 Spells
-     * @param 4 Items
-     */
-    Player* const Hero,
-    /**
-     * @brief The Monster as a 2d array
-     *
-     * @param 0 Stats 0-hp 1-maxhp 2-mp 3-maxmp 4-atk 5-def 6-tempatk 7-tempdef
-     * 8-Montype
-     * @param 1 Buff Storage 0-Stone_Skin 1-Frenzy
-     * @param 2 Debuff Storage 0-Burn 1-Poison
-     * @param 3 Gimmicks 0-Burn_Heal 1-Poison_Heal
-     */
-    Opponent* const Enemy
-) {
+int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
 
     // Hero buffs
     // if Hero has Stone Skin, apply Stone Skin (+3def)
@@ -81,7 +59,7 @@ int buffs_debuffs(
             Enemy->stats.hp = Enemy->stats.hp - 5;
         }
     }
-    // if Monster has poison, apply poison (-10hp)
+    // if Monster has poison, apply poison (hp-poison)
     if (Enemy->debuff.poison > 0) {
         printf("Monster was poisoned!\n");
         Enemy->stats.hp = Enemy->stats.hp - Enemy->debuff.poison;

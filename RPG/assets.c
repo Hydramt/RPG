@@ -20,6 +20,12 @@ int death(int type) {
         printf("Mad Bunny died\n");
         printf("=============\n");
     }
+    // If Mad Bunny
+    else if (type == 2) {
+        assets(5);
+        printf("Fire Wolf died\n");
+        printf("=============\n");
+    }
 }
 
 // Function for the image assets
@@ -59,6 +65,15 @@ int assets(int grab) {
         case 4:
             printf("  ___/\\_______     * \n");
             printf(" / /o         \\__*\\+\\*\n");
+            printf(" \\/\\             \\/ /\n");
+            printf("/\\/                /\n");
+            printf("\\___   _____   ____|\n");
+            printf("    | | | | | | | |\n");
+            printf("    <_| <_| <_| <_|\n");
+            break;
+        case 5:
+            printf("  ___/\\_______       \n");
+            printf(" /  x         \\__ \\#\\\n");
             printf(" \\/\\             \\/ /\n");
             printf("/\\/                /\n");
             printf("\\___   _____   ____|\n");

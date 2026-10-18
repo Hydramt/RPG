@@ -51,8 +51,8 @@ const char* spells(
         if (description == 0) {
             return "Firebolt";
         } else {
-            // Deal 10 damage
-            Hero->stats.temp_atk = 10;
+            // Deal 15 damage
+            Hero->stats.temp_atk = 15;
             // Drink 10 mana
             Hero->stats.mp = Hero->stats.mp - 10;
 
@@ -88,5 +88,16 @@ const char* spells(
             // Applies 3 poison
             Enemy->debuff.poison = Enemy->debuff.poison + 3;
         }
+    } else if (spell == 5) {
+        if (description == 0) {
+            return "Ice Spray";
+        }
+        // Deal 5 damage
+        Hero->stats.temp_atk = 5;
+        // Drink 10 mana
+        Hero->stats.mp = Hero->stats.mp - 15;
+
+        // Apply 4 Chill
+        Enemy->debuff.chill += 4;
     }
 }

@@ -28,13 +28,17 @@ typedef struct buffs {
  */
 typedef struct debuffs {
     /**
-     * @brief *0.75 atk -5hp
+     * @brief *0.75 atk -5hp (burn cancels out chill)
      */
     int burn;
     /**
      * @brief -poison amount hp
      */
     int poison;
+    /**
+     * @brief *0.5 atk (chill cancels out burn)
+     */
+    int chill;
 } Debuffs;
 
 /**
@@ -178,7 +182,7 @@ typedef struct opponent {
 } Opponent;
 
 /**
- * @brief Apply Buffs and Debuffs. Then Deincrement them
+ * @brief Apply Buffs and Debuffs. Then Decrease them
  *
  * @param Enemy The Structure to hold the Enemy
  * @param Hero The Structure to hold the Player

@@ -39,8 +39,8 @@ const char* items(
         if (description == 0) {
             return "Hp Potion";
         } else {
-            // Heal 20
-            Hero->stats.temp_atk = -20;
+            // Heal 30
+            Hero->stats.temp_atk = -30;
         }
 
     }
@@ -50,24 +50,26 @@ const char* items(
         if (description == 0) {
             return "Mp Potion";
         } else {
-            // Restore 20 mp (Have a message)
-            Hero->stats.mp = Hero->stats.mp + 20;
+            // Restore 30 mp (Have a message)
+            Hero->stats.mp = Hero->stats.mp + 30;
             if (Hero->stats.mp > Hero->stats.max_mp) {
                 Hero->stats.mp = Hero->stats.max_mp;
                 printf("The Hero restored their Mp to Max\n");
             } else {
-                printf("The Hero restored 20Mp\n");
+                printf("The Hero restored 30Mp\n");
             }
         }
     }
 
-    // Item Name Ice Potion
+    // Item Name Ice Flask
     else if (item == 3) {
         if (description == 0) {
-            return "Ice Potion";
+            return "Ice Flask";
         } else {
             // Deal 15 damage
             Hero->stats.temp_atk = 15;
+
+            Enemy->debuff.chill += 5;
         }
     }
 }

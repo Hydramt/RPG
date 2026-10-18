@@ -39,6 +39,7 @@ int main(void) {
     Hero.buff.frenzy = 0;
     Hero.debuff.burn = 0;
     Hero.debuff.poison = 0;
+    Hero.debuff.chill = 0;
 
     // Set the Hero's starting spells
     // Check
@@ -67,7 +68,7 @@ int main(void) {
     // Item amount 1
     Hero.item.item_amount[1] = 1;
 
-    // Ice Potion
+    // Ice Flask
     Hero.item.item_id[2] = 3;
     // Stackable = Yes
     Hero.item.item_stackable[2] = 1;
@@ -93,6 +94,7 @@ int main(void) {
     Enemy.buff.frenzy = 0;
     Enemy.debuff.burn = 0;
     Enemy.debuff.poison = 0;
+    Enemy.debuff.chill = 0;
     // Set Gimmicks to 0
     Enemy.gimmick.burn_absorb = 0;
     Enemy.gimmick.poison_heal = 0;
@@ -152,6 +154,9 @@ int main(void) {
         if (Enemy.stats.enemy_type == 1) {
             printf("The Mad Bunny attacks!\n");
             assets(1);
+        } else if (Enemy.stats.enemy_type == 2) {
+            printf("The Fire Wolf attacks!\n");
+            assets(4);
         }
 
         // The combat loop

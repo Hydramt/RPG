@@ -13,6 +13,15 @@ int check(int grab) {
         printf("Beware, at half health it enters\n");
         printf("a frenzy.\n");
     }
+    if (grab == 2) {
+        printf("The Fire Wolf\n");
+        printf("Str:7 Def:2\n");
+        printf("Max Hp:80 Max Mp:50\n");
+        printf("The Fire Wolf: A dangerous inhabitant\n");
+        printf("of The Cave. The hotter it burns the\n");
+        printf("stronger it is! Using chill may be\n");
+        printf("helpful.\n");
+    }
 }
 
 const char* spells(

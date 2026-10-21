@@ -231,3 +231,12 @@ spells(int spell, int description, Player* const Hero, Opponent* const Enemy);
  */
 const char*
 items(int item, int description, Player* const Hero, Opponent* const Enemy);
+
+/**
+ * @brief Set Monster Stats to new Monster Stats
+ *
+ * @param Enemy The Structure to hold the Enemy
+ * @param grab Which enemy it sets to
+ * @return New Monster Stats
+ */
+void monster(Opponent* const Enemy, int grab);

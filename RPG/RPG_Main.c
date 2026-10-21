@@ -118,31 +118,9 @@ int main(void) {
         scanf("%d", &player_choice);
 
         if (player_choice == 1) {
-            // Set Enemy Stats
-            Enemy.stats.hp = 40;
-            Enemy.stats.max_hp = 40;
-            Enemy.stats.mp = 20;
-            Enemy.stats.max_mp = 20;
-            Enemy.stats.atk = 3;
-            Enemy.stats.def = 0;
-            Enemy.stats.temp_atk = 0;
-            Enemy.stats.temp_def = 0;
-            // Set Enemy Type (Mad Bunny)
-            Enemy.stats.enemy_type = 1;
+            monster(&Enemy, 1);
         } else if (player_choice == 2) {
-            // Set Enemy Stats
-            Enemy.stats.hp = 80;
-            Enemy.stats.max_hp = 80;
-            Enemy.stats.mp = 50;
-            Enemy.stats.max_mp = 50;
-            Enemy.stats.atk = 7;
-            Enemy.stats.def = 2;
-            Enemy.stats.temp_atk = 0;
-            Enemy.stats.temp_def = 0;
-            // Set Enemy Type (Fire Wolf)
-            Enemy.stats.enemy_type = 2;
-            // Set Fire Wolf Gimmick (Burn Absorb)
-            Enemy.gimmick.burn_absorb = 1;
+            monster(&Enemy, 2);
         } else if (player_choice == 3) {
             printf("Not implemented yet\n");
         } else {

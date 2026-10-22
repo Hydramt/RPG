@@ -21,6 +21,10 @@ typedef struct buffs {
      * @brief *2 dmg
      */
     int frenzy;
+    /**
+     * @brief Removes Buffs and Debuffs
+     */
+    int cleanse;
 } Buffs;
 
 /**
@@ -39,6 +43,10 @@ typedef struct debuffs {
      * @brief *0.5 atk (chill cancels out burn)
      */
     int chill;
+    /**
+     * @brief -5, -10, -15 mp/hp
+     */
+    int slime;
 } Debuffs;
 
 /**
@@ -85,6 +93,10 @@ typedef struct hero_stats {
      * @brief How much exp the player has
      */
     int exp;
+    /**
+     * @brief How much gold the player has
+     */
+    int gold;
 } Hero_Stats;
 
 /**
@@ -165,10 +177,18 @@ typedef struct enemy_stats {
  * @brief Gimmicks enemies can have
  */
 typedef struct gimmick {
-    // Heal from poison
+    /**
+     * @brief Heal from poison
+     */
     int poison_heal;
-    // Heal from burn
+    /**
+     * @brief Heal from burn
+     */
     int burn_absorb;
+    /**
+     * @brief Allows there to be more than one Enemy at a time
+     */
+    int multiply;
 } Gimmick;
 
 /**

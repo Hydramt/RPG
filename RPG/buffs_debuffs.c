@@ -6,6 +6,30 @@
 
 int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
 
+    // If Hero has cleanse
+    if (Hero->buff.cleanse > 0) {
+        if (Hero->debuff.burn > 0) {
+            Hero->debuff.burn--;
+            Hero->buff.cleanse--;
+            printf("The Hero's burn is reduced\n");
+        }
+        if (Hero->debuff.poison > 0) {
+            Hero->debuff.poison--;
+            Hero->buff.cleanse--;
+            printf("The Hero's poison is reduced\n");
+        }
+        if (Hero->debuff.chill > 0) {
+            Hero->debuff.chill--;
+            Hero->buff.cleanse--;
+            printf("The Hero's chill is reduced\n");
+        }
+        if (Hero->debuff.slime > 0) {
+            Hero->debuff.slime--;
+            Hero->buff.cleanse--;
+            printf("The Hero's slime is reduced\n");
+        }
+    }
+
     // Hero buffs
     // If Hero has Stone Skin, apply Stone Skin (+3def)
     if (Hero->buff.stone_skin > 0) {
@@ -69,6 +93,76 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
         Hero->stats.hp = Hero->stats.hp - Hero->debuff.poison;
         // Decrease Debuff by 1
         Hero->debuff.poison--;
+    }
+
+    // If Hero has negative mp
+    if (Hero->stats.mp < 0) {
+        // Eats Hero's hp
+        Hero->stats.hp += (Hero->stats.mp * 1.5);
+        // Resets mp
+        Hero->stats.mp = 0;
+        printf("The Hero experienced mana burn.\n");
+    }
+
+    // If Hero has slime, apply slime (-5, -10, -15 mp/hp)
+    if (Hero->debuff.slime > 0) {
+        // If The Hero is Moderately Slimed
+        if (Hero->debuff.slime >= 5) {
+            // If The Hero is Heavily Slimed
+            if (Hero->debuff.slime >= 10) {
+                // Decrease Debuff by 3
+                Hero->debuff.slime -= 3;
+                // Eat 15 Mana
+                Hero->stats.mp -= 15;
+                printf("The Hero was Heavily Slimed!\n");
+            } else {
+                // Decrease Debuff by 2
+                Hero->debuff.slime -= 2;
+                // Eat 10 Mana
+                Hero->stats.mp -= 10;
+                printf("The Hero was moderately Slimed!\n");
+            }
+        } else {
+            // Decrease Debuff by 1
+            Hero->debuff.slime--;
+            // Eat 5 Mana
+            Hero->stats.mp -= 5;
+            printf("The Hero is coated in a thin layer of slime.\n");
+        }
+        // If Hero has negative mp
+        if (Hero->stats.mp < 0) {
+            // Eats Hero's hp
+            Hero->stats.hp += Hero->stats.mp;
+            // Resets mp
+            Hero->stats.mp = 0;
+            printf("The Slime ate through The Hero's hp.\n");
+        } else {
+            printf("The Slime ate through The Hero's mp.\n");
+        }
+    }
+
+    // If Enemy has cleanse
+    if (Enemy->buff.cleanse > 0) {
+        if (Enemy->debuff.burn > 0) {
+            Enemy->debuff.burn--;
+            Enemy->buff.cleanse--;
+            printf("The Enemy's burn is reduced\n");
+        }
+        if (Enemy->debuff.poison > 0) {
+            Enemy->debuff.poison--;
+            Enemy->buff.cleanse--;
+            printf("The Enemy's poison is reduced\n");
+        }
+        if (Enemy->debuff.chill > 0) {
+            Enemy->debuff.chill--;
+            Enemy->buff.cleanse--;
+            printf("The Enemy's chill is reduced\n");
+        }
+        if (Enemy->debuff.slime > 0) {
+            Enemy->debuff.slime--;
+            Enemy->buff.cleanse--;
+            printf("The Enemy's slime is reduced\n");
+        }
     }
 
     // Monster buffs
@@ -142,5 +236,51 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
         Enemy->stats.hp = Enemy->stats.hp - Enemy->debuff.poison;
         // Decrease Debuff by 1
         Enemy->debuff.poison--;
+    }
+
+    // If Enemy has negative mp
+    if (Enemy->stats.mp < 0) {
+        // Eats Enemy's hp
+        Enemy->stats.hp += (Hero->stats.mp * 1.5);
+        // Resets mp
+        Enemy->stats.mp = 0;
+        printf("The Enemy experienced mana burn.\n");
+    }
+
+    // If Enemy has slime, apply slime (-5, -10, -15 mp/hp)
+    if (Enemy->debuff.slime > 0) {
+        // If The Enemy is Moderately Slimed
+        if (Enemy->debuff.slime >= 5) {
+            // If The Enemy is Heavily Slimed
+            if (Enemy->debuff.slime >= 10) {
+                // Decrease Debuff by 3
+                Enemy->debuff.slime -= 3;
+                // Eat 15 Mana
+                Enemy->stats.mp -= 15;
+                printf("The Enemy was Heavily Slimed!\n");
+            } else {
+                // Decrease Debuff by 2
+                Enemy->debuff.slime -= 2;
+                // Eat 10 Mana
+                Enemy->stats.mp -= 10;
+                printf("The Enemy was moderately Slimed!\n");
+            }
+        } else {
+            // Decrease Debuff by 1
+            Enemy->debuff.slime--;
+            // Eat 5 Mana
+            Enemy->stats.mp -= 5;
+            printf("The Enemy is coated in a thin layer of slime.\n");
+        }
+        // If Enemy has negative mp
+        if (Enemy->stats.mp < 0) {
+            // Eats Enemy's hp
+            Enemy->stats.hp += Enemy->stats.mp;
+            // Resets mp
+            Enemy->stats.mp = 0;
+            printf("The Slime ate through The Enemy's hp.\n");
+        } else {
+            printf("The Slime ate through The Enemy's mp.\n");
+        }
     }
 }

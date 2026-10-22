@@ -80,6 +80,24 @@ int assets(int grab) {
             printf("    | | | | | | | |\n");
             printf("    <_| <_| <_| <_|\n");
             break;
+        case 6:
+            printf(" _____\n");
+            printf("( o o )\n");
+            printf(" -----\n");
+            break;
+        case 7:
+            printf(" _____\n");
+            printf("( o o )_____\n");
+            printf(" -----( o o ) \n");
+            printf("       -----\n");
+            break;
+        case 8:
+            printf("       _____\n");
+            printf(" _____(o o  )\n");
+            printf("( o o )_____\n");
+            printf(" -----( o o ) \n");
+            printf("       -----\n");
+            break;
     }
 
     return 0;

@@ -48,5 +48,33 @@ void monster(
         Enemy->stats.enemy_type = 2;
         // Set Fire Wolf Gimmick (Burn Absorb)
         Enemy->gimmick.burn_absorb = 1;
+    } else if (grab == 3) {
+        // Set Enemy Stats
+        Enemy->stats.hp = 20;
+        Enemy->stats.max_hp = 20;
+        Enemy->stats.mp = 0;
+        Enemy->stats.max_mp = 0;
+        Enemy->stats.atk = 4;
+        Enemy->stats.def = 4;
+        Enemy->stats.temp_atk = 0;
+        Enemy->stats.temp_def = 0;
+        // Set Enemy Type (Slime)
+        Enemy->stats.enemy_type = 3;
+        // Set Slime Gimmick (Multiply)
+        Enemy->gimmick.multiply = 1;
+    } else if (grab == 4) {
+        // Set Enemy Stats
+        Enemy->stats.hp = 40;
+        Enemy->stats.max_hp = 40;
+        Enemy->stats.mp = 0;
+        Enemy->stats.max_mp = 0;
+        Enemy->stats.atk = 4;
+        Enemy->stats.def = 4;
+        Enemy->stats.temp_atk = 0;
+        Enemy->stats.temp_def = 0;
+        // Set Enemy Type (2 Slimes)
+        Enemy->stats.enemy_type = 3;
+        // Set Slime Gimmick (Multiply)
+        Enemy->gimmick.multiply = 2;
     }
 }

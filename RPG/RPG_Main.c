@@ -40,6 +40,7 @@ int main(void) {
     Hero.debuff.burn = 0;
     Hero.debuff.poison = 0;
     Hero.debuff.chill = 0;
+    Hero.debuff.slime = 0;
 
     // Set the Hero's starting spells
     // Check
@@ -95,6 +96,7 @@ int main(void) {
     Enemy.debuff.burn = 0;
     Enemy.debuff.poison = 0;
     Enemy.debuff.chill = 0;
+    Enemy.debuff.slime = 0;
     // Set Gimmicks to 0
     Enemy.gimmick.burn_absorb = 0;
     Enemy.gimmick.poison_heal = 0;
@@ -122,19 +124,42 @@ int main(void) {
         } else if (player_choice == 2) {
             monster(&Enemy, 2);
         } else if (player_choice == 3) {
-            printf("Not implemented yet\n");
+            monster(&Enemy, 3);
         } else {
             printf("Incorrect input\n");
             printf("Please try again\n");
         }
 
         // Enemy intro message
+        // If Mad Bunny
         if (Enemy.stats.enemy_type == 1) {
             printf("The Mad Bunny attacks!\n");
             assets(1);
-        } else if (Enemy.stats.enemy_type == 2) {
+        }
+
+        // If Fire Wolf
+        else if (Enemy.stats.enemy_type == 2) {
             printf("The Fire Wolf attacks!\n");
             assets(4);
+        }
+
+        // If Slime
+        else if (Enemy.stats.enemy_type == 3) {
+            // One Slime
+            if (Enemy.gimmick.multiply == 1) {
+                printf("A Slime attacks!\n");
+                assets(6);
+            }
+            // Two Slimes
+            else if (Enemy.gimmick.multiply == 2) {
+                printf("Two Slimes attack!\n");
+                assets(7);
+            }
+            // More Slimes
+            else {
+                printf("A horde of Slimes attack!\n");
+                assets(8);
+            }
         }
 
         // The combat loop

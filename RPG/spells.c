@@ -22,6 +22,15 @@ int check(int grab) {
         printf("stronger it is! Using chill may be\n");
         printf("helpful.\n");
     }
+    if (grab == 3) {
+        printf("Slime\n");
+        printf("Str:4 Def:4\n");
+        printf("Max Hp:20 Max Mp:0\n");
+        printf("One of the most basic enemies.\n");
+        printf("They like to eat your hp and mana slowly.\n");
+        printf("Beware groups of them as they can quickly\n");
+        printf("multiply and swarm you.\n");
+    }
 }
 
 const char* spells(
@@ -51,6 +60,7 @@ const char* spells(
         } else {
             // Drink 5 mana
             Hero->stats.mp = Hero->stats.mp - 5;
+            Hero->stats.temp_atk = 0;
             check(Enemy->stats.enemy_type);
         }
     }

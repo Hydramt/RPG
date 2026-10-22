@@ -72,4 +72,19 @@ const char* items(
             Enemy->debuff.chill += 5;
         }
     }
+
+    // Item Name Cleansing Potion
+    else if (item == 4) {
+        if (description == 0) {
+            return "Cleansing Potion";
+        } else {
+            Hero->debuff.burn = 0;
+            Hero->debuff.chill = 0;
+            Hero->debuff.poison = 0;
+            Hero->debuff.slime = 0;
+            Hero->buff.frenzy = 0;
+            Hero->buff.stone_skin = 0;
+            Hero->buff.cleanse += 5;
+        }
+    }
 }

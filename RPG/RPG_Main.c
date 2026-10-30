@@ -58,10 +58,7 @@ int main(void) {
     Hero.spell.spell_id[3] = 4;
     Hero.spell.spell_lvl[3] = 0;
     // Empty
-    Hero.spell.spell_id[4] = 1;
-    Hero.spell.spell_lvl[4] = 1;
-    // Empty
-    Hero.spell.spell_id[5] = 0;
+    Hero.spell.spell_id[4] = 0;
 
     // Set the starting items
     // Hp potion
@@ -135,7 +132,7 @@ int main(void) {
         } else if (player_choice == 2) {
             monster(&Enemy, 2);
         } else if (player_choice == 3) {
-            monster(&Enemy, 3);
+            monster(&Enemy, 5);
         } else {
             printf("Incorrect input\n");
             printf("Please try again\n");
@@ -171,6 +168,12 @@ int main(void) {
                 printf("A horde of Slimes attack!\n");
                 assets(8);
             }
+        }
+
+        // If Ice Stag
+        else if (Enemy.stats.enemy_type == 4) {
+            printf("The Ice Stag attacks!\n");
+            assets(9);
         }
 
         // The combat loop

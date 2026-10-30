@@ -5,31 +5,44 @@
 #include <time.h>
 
 int check(int grab) {
-    if (grab == 1) {
-        printf("The Mad Bunny\n");
-        printf("Str:3 Def:0\n");
-        printf("Max Hp:40 Max Mp:20\n");
-        printf("The Mad Bunny: A beginner enemy.\n");
-        printf("Beware, at half health it enters\n");
-        printf("a frenzy.\n");
-    }
-    if (grab == 2) {
-        printf("The Fire Wolf\n");
-        printf("Str:7 Def:2\n");
-        printf("Max Hp:80 Max Mp:50\n");
-        printf("The Fire Wolf: A dangerous inhabitant\n");
-        printf("of The Cave. The hotter it burns the\n");
-        printf("stronger it is! Using chill may be\n");
-        printf("helpful.\n");
-    }
-    if (grab == 3) {
-        printf("Slime\n");
-        printf("Str:4 Def:4\n");
-        printf("Max Hp:20 Max Mp:0\n");
-        printf("One of the most basic enemies.\n");
-        printf("They like to eat your hp and mana slowly.\n");
-        printf("Beware groups of them as they can quickly\n");
-        printf("multiply and swarm you.\n");
+    switch (grab) {
+        case 1:
+            printf("The Mad Bunny\n");
+            printf("Str:3 Def:0\n");
+            printf("Max Hp:40 Max Mp:20\n");
+            printf("Mad Bunnies: A beginner enemy.\n");
+            printf("Beware, at half health it enters\n");
+            printf("a frenzy.\n");
+            break;
+        case 2:
+            printf("The Fire Wolf\n");
+            printf("Str:7 Def:2\n");
+            printf("Max Hp:80 Max Mp:50\n");
+            printf("The Fire Wolf: A dangerous inhabitant\n");
+            printf("of The Cave. The hotter it burns the\n");
+            printf("stronger it is! Using chill may be\n");
+            printf("helpful.\n");
+            break;
+        case 3:
+            printf("Slime\n");
+            printf("Str:4 Def:4\n");
+            printf("Max Hp:20 Max Mp:0\n");
+            printf("Slimes: One of the most basic enemies.\n");
+            printf("They like to eat your hp and mana slowly.\n");
+            printf("Beware groups of them as they can quickly\n");
+            printf("multiply and swarm you.\n");
+            break;
+        case 4:
+            printf("The Icy Stag\n");
+            printf("Str:6 Def:3\n");
+            printf("Max Hp:60 Max Mp:100\n");
+            printf("The Icy Stag: A creature of the cold.\n");
+            printf("It does not like debuffs and will attempt\n");
+            printf("to shed them if possible. When it reaches\n");
+            printf("half health it will attempt to defend\n");
+            printf("itself with it's icy shell. It's mana is\n");
+            printf("not endless.\n");
+            break;
     }
 }
 
@@ -120,6 +133,50 @@ const char* spells(
 
                     // Apply 4 Chill
                     Enemy->debuff.chill += 4;
+                    break;
+                case 6:
+                    // Spell Name Inner Fire
+                    if (description == 0) {
+                        return "Inner Fire";
+                    }
+                    // Drink 10 mana
+                    Hero->stats.mp = Hero->stats.mp - 10;
+                    // Add 4 Frenzy
+                    Hero->buff.frenzy += 4;
+                    // Add 4 Burn
+                    Hero->debuff.burn += 4;
+                    break;
+                case 7:
+                    // Spell Name Slime Shot
+                    if (description == 0) {
+                        return "Slime Shot";
+                    }
+                    // Drink 10 mana
+                    Hero->stats.mp = Hero->stats.mp - 10;
+                    // Add 5 Slime
+                    Enemy->debuff.slime += 5;
+                    // Deal damage
+                    Hero->stats.temp_atk = 10;
+                    break;
+                case 8:
+                    // Spell Name Magic Missile
+                    if (description == 0) {
+                        return "Magic Missile";
+                    }
+                    // Drink 5 mana
+                    Hero->stats.mp = Hero->stats.mp - 5;
+                    // Deal 20 dmg
+                    Hero->stats.temp_atk += 20;
+                    break;
+                case 9:
+                    // Spell Name Heal
+                    if (description == 0) {
+                        return "Heal";
+                    }
+                    // Drink 10 mana
+                    Hero->stats.mp = Hero->stats.mp - 10;
+                    // Heal 20 dmg
+                    Hero->stats.temp_atk = -20;
                     break;
             }
             break;
@@ -251,11 +308,11 @@ const char* spells(
                             if (description == 0) {
                                 return "Greater Poison Shot";
                             } else {
-                                // Deal 5 damage
+                                // Deal 10 damage
                                 Hero->stats.temp_atk = 10;
-                                // Drink 10 mana
+                                // Drink 15 mana
                                 Hero->stats.mp = Hero->stats.mp - 15;
-                                // Applies 3 poison
+                                // Applies 6 poison
                                 Enemy->debuff.poison = Enemy->debuff.poison + 6;
                             }
                             break;
@@ -272,7 +329,7 @@ const char* spells(
                                 // Applies 4 poison
                                 Enemy->debuff.poison += 4;
                                 // Applies 4 slime
-                                Enemy->debuff.poison += 4;
+                                Enemy->debuff.slime += 4;
                             }
                             break;
                     }

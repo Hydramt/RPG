@@ -213,6 +213,55 @@ int enemy_ai(
         }
     }
 
+    // Icy Stag
+    if (Enemy->stats.enemy_type == 4) {
+
+        // If the Icy Stag has no Cleanse and it has a debuff
+        if ((Enemy->debuff.burn || Enemy->debuff.chill ||
+             Enemy->debuff.poison || Enemy->debuff.slime) &&
+            Enemy->buff.cleanse == 0) {
+            printf("The Icy Stag began to cleanse itself");
+            // The stag gains cleanse
+            Enemy->buff.cleanse += 3;
+            Enemy->stats.temp_atk = 0;
+        }
+
+        // If the Icy Stag is at less than half hp and it has at least 10 mp
+        else if (
+            (Enemy->stats.hp <= (Enemy->stats.max_hp / 2)) &&
+            (Enemy->stats.mp >= 10)
+        ) {
+            printf("The Icy Stag grew a defensive shell to protect itself");
+
+            // If Hero attacked this turn
+            if (Hero->stats.temp_atk > 0) {
+                // Deal damage and apply Chill
+                printf("\nYou hit the hard icy shell and took 5 dmg");
+                Hero->stats.hp -= 5;
+                Hero->debuff.chill += 2;
+            }
+
+            // Gain 6 defense and lose 10 mp
+            Enemy->stats.temp_def += 6;
+            Enemy->stats.mp -= 10;
+            Enemy->stats.temp_atk = 0;
+        }
+        // If The Icy Stag has 15 mp
+        else if (Enemy->stats.mp > 15) {
+            // Icy Stag casts Blizzard (Chill + Atk)
+            printf("The Icy Stag whipped up a blizzard!");
+            // Apply chill
+            Hero->debuff.chill += 3;
+            Enemy->stats.temp_atk += Hero->debuff.chill;
+            Enemy->stats.mp -= 15;
+        }
+        // Else
+        else {
+            // Icy Stag just attacks
+            printf("The Icy Stag attempts to trample you!");
+        }
+    }
+
     // Enemy calculations
     // If Enemy didn't do any damage
     if (Enemy->stats.temp_atk <= 0) {
@@ -270,6 +319,19 @@ int enemy_ai(
         // If more slime
         else {
             assets(8);
+        }
+    } else if (Enemy->stats.enemy_type == 4) {
+        // If Enemy has more temp def than actual def
+        if (Enemy->stats.temp_def > (Enemy->stats.def + 3)) {
+            assets(11);
+        }
+        // If Hero has chill
+        else if (Hero->debuff.chill > 0) {
+            assets(10);
+        }
+        // Else
+        else {
+            assets(9);
         }
     }
 }

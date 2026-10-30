@@ -98,6 +98,54 @@ int assets(int grab) {
             printf(" -----( o o ) \n");
             printf("       -----\n");
             break;
+        case 9:
+            printf("\\ |-          |  | /\n");
+            printf(" -\\    ______ \\--/-\n");
+            printf("   \\__| O  O |__/\n");
+            printf("       |    |\n");
+            printf("       |____|\n");
+            printf("      __|  |______________ \n");
+            printf("     |                    |_/\\\n");
+            printf("     |                     __/\n");
+            printf("     |                    |\n");
+            printf("     |  _____   ________  |\n");
+            printf("     | |     | |  | |   | |\n");
+            printf("     |_|     |_|  |_|   |_|\n");
+            printf("     |_|     |_|  |_|   |_|\n");
+            break;
+        case 10:
+            printf("\\*|-  *  *  * |  |*/ * *\n");
+            printf(" -\\ *  ______ \\--/- * *\n");
+            printf(" * \\__| O  O |__/ *    *\n");
+            printf("* *  * |    |   *    *  *\n");
+            printf(" *  *  |____| *   * *  *\n");
+            printf("  *   __|  |______________ \n");
+            printf(" *  *|                    |_/\\\n");
+            printf("*  * |                     __/\n");
+            printf(" * * |                    |\n");
+            printf("  *  |  _____   ________  |\n");
+            printf("*  * | |  *  | | *| |*  | |\n");
+            printf("  *  |_| *** |_|* |_| * |_|\n");
+            printf("*****|_|*****|_|**|_|***|_|\n");
+            break;
+        case 11:
+            printf("      ___________________________\n");
+            printf("     /      V            V   V   \\\n");
+            printf("    /    V       V        V        \\\n");
+            printf("    |  \\|-    V     |  | /   V     |\n");
+            printf("    |   -\\    ______ \\--/-           \\\n");
+            printf("    |  V  \\__| O  O |__/  V           \\\n");
+            printf("    |   V     |    |           V      | \n");
+            printf("    |     V   |____|     V         V   \\\n");
+            printf("    |        __|  |______________      |\n");
+            printf("    |    V  |                    |_/\\  |\n");
+            printf("    |       |                     __/  |\n");
+            printf("    |  V    |                    |     |\n");
+            printf("    |       |  _____   ________  |     |\n");
+            printf("    |   V   | |     | |  | |   | |  V  |\n");
+            printf("    |    V  |_|     |_|  |_|   |_|     |\n");
+            printf("    |       |_|     |_|  |_|   |_|     /\n");
+            break;
     }
 
     return 0;

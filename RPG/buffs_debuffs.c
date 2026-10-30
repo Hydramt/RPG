@@ -89,7 +89,7 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
     }
     // If Hero has chill, apply chill (*0.5dmg)
     if (Hero->debuff.chill > 0) {
-        printf("The Hero was chill\n");
+        printf("The Hero was chilled\n");
         Hero->stats.temp_atk = Hero->stats.temp_atk * 0.5;
         // Decrease Debuff by 1
         Hero->debuff.chill--;
@@ -227,6 +227,9 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
             Enemy->stats.hp = Enemy->stats.hp + 5;
             // Decrease Debuff by 1
             Enemy->debuff.burn--;
+            if (Enemy->stats.hp > Enemy->stats.max_hp) {
+                Enemy->stats.hp = Enemy->stats.max_hp;
+            }
         }
         // if Monster has burn, apply burn (-5hp x0.75dmg)
         else {

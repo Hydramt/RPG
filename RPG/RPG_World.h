@@ -93,6 +93,6 @@ void visitCave(Player *Hero, Opponent *Enemy);
  * @param Hero The player character
  * @param Enemy The current enemy
  */
-void playWorld(Player *Hero, Opponent *Enemy);
+void playerWorld(Player *Hero, Opponent *Enemy);
 
 #endif

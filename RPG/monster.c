@@ -22,6 +22,19 @@ void monster(
      */
     int grab
 ) {
+    // Set Enemy's Buffs/Debuffs starting at 0
+    Enemy->buff.stone_skin = 0;
+    Enemy->buff.iron_skin = 0;
+    Enemy->buff.frenzy = 0;
+    Enemy->buff.cleanse = 0;
+    Enemy->debuff.burn = 0;
+    Enemy->debuff.poison = 0;
+    Enemy->debuff.chill = 0;
+    Enemy->debuff.slime = 0;
+    // Set Gimmicks to 0
+    Enemy->gimmick.burn_absorb = 0;
+    Enemy->gimmick.poison_heal = 0;
+    Enemy->gimmick.multiply = 0;
     if (grab == 1) {
         // Set Enemy Stats
         Enemy->stats.hp = 40;
@@ -76,5 +89,17 @@ void monster(
         Enemy->stats.enemy_type = 3;
         // Set Slime Gimmick (Multiply)
         Enemy->gimmick.multiply = 2;
+    } else if (grab == 5) {
+        // Set Enemy Stats
+        Enemy->stats.hp = 60;
+        Enemy->stats.max_hp = 60;
+        Enemy->stats.mp = 100;
+        Enemy->stats.max_mp = 100;
+        Enemy->stats.atk = 6;
+        Enemy->stats.def = 3;
+        Enemy->stats.temp_atk = 0;
+        Enemy->stats.temp_def = 0;
+        // Set Enemy Type Icy Stag
+        Enemy->stats.enemy_type = 4;
     }
 }

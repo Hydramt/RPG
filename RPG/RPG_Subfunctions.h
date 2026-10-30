@@ -18,6 +18,10 @@ typedef struct buffs {
      */
     int stone_skin;
     /**
+     * @brief *2 def
+     */
+    int iron_skin;
+    /**
      * @brief *2 dmg
      */
     int frenzy;
@@ -100,6 +104,24 @@ typedef struct hero_stats {
 } Hero_Stats;
 
 /**
+ * @brief Hero Spell storage
+ */
+typedef struct spells {
+    /**
+     * @brief Which spell it is
+     */
+    int spell_id[10];
+    /**
+     * @brief The level of the spell
+     */
+    int spell_lvl[10];
+    /**
+     * @brief The type of the spell
+     */
+    int spell_type[10];
+} Spells;
+
+/**
  * @brief The items the player has in their inventory
  */
 typedef struct items {
@@ -124,10 +146,7 @@ typedef struct player {
     Hero_Stats stats;
     Buffs buff;
     Debuffs debuff;
-    /**
-     * @brief Storage for the player's spells
-     */
-    int spell[10];
+    Spells spell;
     Items item;
 } Player;
 

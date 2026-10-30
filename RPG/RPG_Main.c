@@ -36,7 +36,9 @@ int main(void) {
 
     // Set Hero's Buffs/Debuffs starting at 0
     Hero.buff.stone_skin = 0;
+    Hero.buff.iron_skin = 0;
     Hero.buff.frenzy = 0;
+    Hero.buff.cleanse = 0;
     Hero.debuff.burn = 0;
     Hero.debuff.poison = 0;
     Hero.debuff.chill = 0;
@@ -44,15 +46,19 @@ int main(void) {
 
     // Set the Hero's starting spells
     // Check
-    Hero.spell[0] = 1;
+    Hero.spell.spell_id[0] = 1;
+    Hero.spell.spell_lvl[0] = 0;
     // Firebolt
-    Hero.spell[1] = 2;
+    Hero.spell.spell_id[1] = 2;
+    Hero.spell.spell_lvl[1] = 0;
     // Stone Skin
-    Hero.spell[2] = 3;
+    Hero.spell.spell_id[2] = 3;
+    Hero.spell.spell_lvl[2] = 0;
     // Poison shot
-    Hero.spell[3] = 4;
+    Hero.spell.spell_id[3] = 4;
+    Hero.spell.spell_lvl[3] = 0;
     // Empty
-    Hero.spell[4] = 0;
+    Hero.spell.spell_id[4] = 0;
 
     // Set the starting items
     // Hp potion
@@ -92,7 +98,9 @@ int main(void) {
 
     // Set Enemy's Buffs/Debuffs starting at 0
     Enemy.buff.stone_skin = 0;
+    Enemy.buff.iron_skin = 0;
     Enemy.buff.frenzy = 0;
+    Enemy.buff.cleanse = 0;
     Enemy.debuff.burn = 0;
     Enemy.debuff.poison = 0;
     Enemy.debuff.chill = 0;
@@ -124,7 +132,7 @@ int main(void) {
         } else if (player_choice == 2) {
             monster(&Enemy, 2);
         } else if (player_choice == 3) {
-            monster(&Enemy, 3);
+            monster(&Enemy, 5);
         } else {
             printf("Incorrect input\n");
             printf("Please try again\n");
@@ -160,6 +168,12 @@ int main(void) {
                 printf("A horde of Slimes attack!\n");
                 assets(8);
             }
+        }
+
+        // If Ice Stag
+        else if (Enemy.stats.enemy_type == 4) {
+            printf("The Ice Stag attacks!\n");
+            assets(9);
         }
 
         // The combat loop

@@ -28,6 +28,10 @@ int damage_calculator(
             printf("Hero healed themselves for %dHp\n", -Hero->stats.temp_atk);
         }
     }
+    // Else if Hero's attack is exactly 0
+    else if (Hero->stats.temp_atk == 0) {
+        // Empty case for spells :D
+    }
     // If Hero did less damage than the enemies defense then deal one damage
     else if (Enemy->stats.temp_def > Hero->stats.temp_atk) {
         printf("Hero dealt 1 damage\n");

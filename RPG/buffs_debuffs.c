@@ -38,6 +38,13 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
         // Decrease Buff by 1
         Hero->buff.stone_skin--;
     }
+    // If Hero has Iron Skin, apply Iron Skin (*2def)
+    if (Hero->buff.iron_skin > 0) {
+        printf("The Hero's skin was tough!\n");
+        Hero->stats.temp_def = Hero->stats.temp_def * 2;
+        // Decrease Buff by 1
+        Hero->buff.iron_skin--;
+    }
     // If Hero has Frenzy, apply Frenzy (x2dmg)
     if (Hero->buff.frenzy > 0) {
         printf("The Hero is in a Frenzy!\n");
@@ -82,7 +89,7 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
     }
     // If Hero has chill, apply chill (*0.5dmg)
     if (Hero->debuff.chill > 0) {
-        printf("The Hero was chill\n");
+        printf("The Hero was chilled\n");
         Hero->stats.temp_atk = Hero->stats.temp_atk * 0.5;
         // Decrease Debuff by 1
         Hero->debuff.chill--;
@@ -173,6 +180,13 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
         // Decrease Buff by 1
         Enemy->buff.stone_skin--;
     }
+    // if Monster has Iron Skin, apply Iron Skin (*2def)
+    if (Enemy->buff.iron_skin > 0) {
+        printf("The Monster's skin was tough!\n");
+        Enemy->stats.temp_def = Enemy->stats.temp_def * 2;
+        // Decrease Buff by 1
+        Enemy->buff.iron_skin--;
+    }
     // if Monster has Frenzy, apply Frenzy (x2dmg)
     if (Enemy->buff.frenzy > 0) {
         printf("The Monster is in a Frenzy!\n");
@@ -213,6 +227,9 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy) {
             Enemy->stats.hp = Enemy->stats.hp + 5;
             // Decrease Debuff by 1
             Enemy->debuff.burn--;
+            if (Enemy->stats.hp > Enemy->stats.max_hp) {
+                Enemy->stats.hp = Enemy->stats.max_hp;
+            }
         }
         // if Monster has burn, apply burn (-5hp x0.75dmg)
         else {

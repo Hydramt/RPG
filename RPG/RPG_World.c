@@ -7,6 +7,7 @@
  */
 
 #include "RPG_World.h"
+#include "RPG_Subfunctions.h"
 #include <stdio.h>
 
 /**
@@ -62,42 +63,40 @@ void showShopMenu(void) {
 /**
  * @brief Lets the player buy items.
  */
-void buyShopItem(
-    int* gold, int itemIDs[], int itemAmounts[], int itemStackable[],
-    int itemID, int price
-) {
+void buyShopItem(Player* const Hero, int itemID, int price) {
 
     // Check if the player has enough gold
-    if (*gold < price) {
+    if (Hero->stats.gold < price) {
         printf("You do not have enough gold!\n");
         return;
     }
 
     // Check if the player already owns the item
     for (int i = 0; i < 10; i++) {
-        if (itemIDs[i] == itemID && itemStackable[i] == 1) {
+        if (Hero->item.item_id[i] == itemID &&
+            Hero->item.item_stackable[i] == 1) {
 
-            itemAmounts[i]++;
+            Hero->item.item_amount[i]++;
 
-            *gold = *gold - price;
+            Hero->stats.gold = Hero->stats.gold - price;
 
             printf("Purchase successful!\n");
-            printf("Gold remaining: %d\n", *gold);
+            printf("Gold remaining: %d\n", Hero->stats.gold);
             return;
         }
     }
 
     // Find an empty inventory slot
     for (int i = 0; i < 10; i++) {
-        if (itemIDs[i] == 0) {
-            itemIDs[i] = itemID;
-            itemAmounts[i] = 1;
-            itemStackable[i] = 1;
+        if (Hero->item.item_id[i] == 0) {
+            Hero->item.item_id[i] = Hero->item.item_id;
+            Hero->item.item_amount[i] = 1;
+            Hero->item.item_stackable[i] = 1;
 
-            *gold = *gold - price;
+            Hero->stats.gold = Hero->stats.gold - price;
 
             printf("Purchase successful!\n");
-            printf("Gold remaining: %d\n", *gold);
+            printf("Gold remaining: %d\n", Hero->stats.gold);
             return;
         }
     }
@@ -108,28 +107,46 @@ void buyShopItem(
 /**
  * @brief Lets the player use the village shop.
  */
-void visitShop(
-    int* gold, int itemIDs[], int itemAmounts[], int itemStackable[]
-) {
+void visitShop(Player* const Hero) {
     int shopChoice = -1;
 
     // Keep the shop open until the player leaves
     while (shopChoice != 0) {
         showShopMenu();
 
-        printf("Current Gold: %d\n", *gold);
+        printf("Current Gold: %d\n", Hero->stats.gold);
         scanf("%d", &shopChoice);
 
         if (shopChoice == 1) {
-            buyShopItem(gold, itemIDs, itemAmounts, itemStackable, 1, 10);
+            buyShopItem(Hero, 1, 10);
         } else if (shopChoice == 2) {
-            buyShopItem(gold, itemIDs, itemAmounts, itemStackable, 2, 10);
+            buyShopItem(Hero, 2, 10);
         } else if (shopChoice == 3) {
-            buyShopItem(gold, itemIDs, itemAmounts, itemStackable, 3, 20);
+            buyShopItem(Hero, 3, 20);
         } else if (shopChoice == 4) {
-            buyShopItem(gold, itemIDs, itemAmounts, itemStackable, 4, 50);
+            buyShopItem(Hero, 4, 50);
         } else if (shopChoice == 5) {
-            printf("Spell Scrolls are coming soon!\n");
+            buyShopItem(Hero, 5, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 6, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 7, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 8, 50);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 9, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 10, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 11, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 12, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 13, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 14, 200);
+        } else if (shopChoice == 5) {
+            buyShopItem(Hero, 15, 200);
         } else if (shopChoice == 0) {
             printf("You left the Shop.\n");
         } else {
@@ -150,10 +167,7 @@ void visitQuestBoard(void) {
 /**
  * @brief Lets the player visit the village
  */
-void visitVillage(
-    int* hp, int maxHp, int* mp, int maxMp, int* gold, int itemIDs[],
-    int itemAmounts[], int itemStackable[]
-) {
+void visitVillage(Player* const Hero) {
     int villageChoice = -1;
 
     printf("Welcome to the Village!\n");
@@ -166,13 +180,13 @@ void visitVillage(
 
         if (villageChoice == 1) {
             // Restore the player's HP and MP
-            *hp = maxHp;
-            *mp = maxMp;
+            Hero->stats.hp = Hero->stats.max_hp;
+            Hero->stats.mp = Hero->stats.max_mp;
 
             printf("You rested at the Village!\n");
             printf("Your HP and MP have been fully restored!\n");
         } else if (villageChoice == 2) {
-            visitShop(gold, itemIDs, itemAmounts, itemStackable);
+            visitShop(Hero);
         } else if (villageChoice == 3) {
             visitQuestBoard();
         } else if (villageChoice == 0) {
@@ -222,16 +236,7 @@ void playWorld(Player* Hero, Opponent* Enemy) {
 
         if (choice == 1) {
             // Pass the player's stats and items to the village
-            visitVillage(
-                &Hero->stats.hp,
-                Hero->stats.max_hp,
-                &Hero->stats.mp,
-                Hero->stats.max_mp,
-                &Hero->stats.gold,
-                Hero->item.item_id,
-                Hero->item.item_amount,
-                Hero->item.item_stackable
-            );
+            visitVillage(Hero);
         } else if (choice == 2) {
             visitForest(Hero, Enemy);
         } else if (choice == 3) {

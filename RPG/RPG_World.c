@@ -210,7 +210,7 @@ void visitForest(Player* Hero, Opponent* Enemy) {
 /**
  * @brief Lets the player explore the open world.
  */
-void playWorld(Player* Hero, Opponent* Enemy) {
+void playerWorld(Player* Hero, Opponent* Enemy) {
 
     int choice = -1;
 

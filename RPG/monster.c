@@ -101,5 +101,19 @@ void monster(
         Enemy->stats.temp_def = 0;
         // Set Enemy Type Icy Stag
         Enemy->stats.enemy_type = 4;
+    } else if (grab == 6) {
+        // Set Enemy Stats
+        Enemy->stats.hp = 60;
+        Enemy->stats.max_hp = 60;
+        Enemy->stats.mp = 0;
+        Enemy->stats.max_mp = 0;
+        Enemy->stats.atk = 4;
+        Enemy->stats.def = 4;
+        Enemy->stats.temp_atk = 0;
+        Enemy->stats.temp_def = 0;
+        // Set Enemy Type (3 Slimes)
+        Enemy->stats.enemy_type = 3;
+        // Set Slime Gimmick (Multiply)
+        Enemy->gimmick.multiply = 3;
     }
 }

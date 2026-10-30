@@ -46,18 +46,7 @@ int combat(
          */
         battle_check = 0;
 
-    // Determine number of spells before combat starts
-    while (magic_check == 0 && count != 10) {
-        if (Hero->spell.spell_id[count] == 0) {
-            magic_check = count;
-        } else {
-            count++;
-        }
-    }
-    magic_check = count;
-    count = 0;
-
-    // Determine number of items before combat starts
+    // Determine number of items
     while (item_check == 0 && count != 10) {
         if (Hero->item.item_id[count] == 0) {
             item_check = count;
@@ -70,6 +59,17 @@ int combat(
 
     // check the hero and the Enemy are alive
     while (Hero->stats.hp > 0 && Enemy->stats.hp > 0) {
+
+        // Determine number of spells
+        while (magic_check == 0 && count != 10) {
+            if (Hero->spell.spell_id[count] == 0) {
+                magic_check = count;
+            } else {
+                count++;
+            }
+        }
+        magic_check = count;
+        count = 0;
 
         /**
          * @brief Allows players to stay in menus if they mistype

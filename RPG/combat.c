@@ -48,7 +48,7 @@ int combat(
 
     // Determine number of spells before combat starts
     while (magic_check == 0 && count != 10) {
-        if (Hero->spell[count] == 0) {
+        if (Hero->spell.spell_id[count] == 0) {
             magic_check = count;
         } else {
             count++;
@@ -105,9 +105,7 @@ int combat(
                      dialog_check--) {
                     count++;
                     printf(
-                        "%d. %s\n",
-                        count,
-                        spells(Hero->spell[count - 1], 0, Hero, Enemy)
+                        "%d. %s\n", count, spells(count - 1, 0, Hero, Enemy)
                     );
                 }
                 count++;
@@ -130,17 +128,17 @@ int combat(
                 else if (player_choice > 0 && player_choice < count) {
                     printf(
                         "The Hero cast %s\n",
-                        spells(Hero->spell[player_choice - 1], 0, Hero, Enemy)
+                        spells(player_choice - 1, 0, Hero, Enemy)
                     );
 
                     // Put the hero's temp def to his actual defense
                     // Incase the hero uses a defense boosting spell
                     Hero->stats.temp_def = Hero->stats.def;
 
-                    // Cast the spell
-                    spells(Hero->spell[player_choice - 1], 1, Hero, Enemy);
                     // Allow the enemy to retaliate
                     battle_check = 1;
+                    // Cast the spell
+                    spells(player_choice - 1, 1, Hero, Enemy);
                     // Allow the player to leave the menu
                     input_sticker = 0;
                 }

@@ -9,6 +9,7 @@
 #include "RPG_World.h"
 #include "RPG_Subfunctions.h"
 #include <stdio.h>
+#include "RPG_Assets.h"
 
 /**
  * @brief Show the world menu.
@@ -89,7 +90,7 @@ void buyShopItem(Player* const Hero, int itemID, int price) {
     // Find an empty inventory slot
     for (int i = 0; i < 10; i++) {
         if (Hero->item.item_id[i] == 0) {
-            Hero->item.item_id[i] = Hero->item.item_id;
+            Hero->item.item_id[i] = itemID;
             Hero->item.item_amount[i] = 1;
             Hero->item.item_stackable[i] = 1;
 
@@ -198,16 +199,52 @@ void visitVillage(Player* const Hero) {
 }
 
 /**
- * @brief Starts a Fire Wolf battle in the cave
+ * @brief Lets the player fight Slimes before the Fire Wolf boss
  */
 void visitCave(Player* Hero, Opponent* Enemy) {
     printf("\nYou have entered the Cave!\n");
-    printf("You've encountered a Fire Wolf!\n");
 
-    // Set the enemy and start combat
+    // First battle: First Slime
+    printf("A Slime appears!\n");
+    
+    // Shows First Slime artwork
+    assets(6);
+    
+    monster(Enemy, 3);
+    int result = combat(Hero, Enemy, 0);
+
+    // Stop if the player runs away or loses
+    if (result == 0 || Hero->stats.hp <= 0 || Enemy->stats.hp > 0) {
+        return;
+    }
+
+    // Second battle: Second Slimes
+    printf("\nYou've encounter 2 slimes and it's blocking your path!\n");
+    
+    // Shows Second Slimes artwork 
+    assets(7);
+   
+    monster(Enemy, 4);
+    result = combat(Hero, Enemy, 0);
+
+    if (result == 0 || Hero->stats.hp <= 0 || Enemy->stats.hp > 0) {
+        return;
+    }
+
+    // Final battle: Fire Wolf boss
+    printf("\nThe Fire Wolf boss appears!\n");
+    
+    // Shows Fire Wolf artwork
+    assets(4);
+   
     monster(Enemy, 2);
-    combat(Hero, Enemy, 0);
+    result = combat(Hero, Enemy, 0);
+
+    if (result != 0 && Hero->stats.hp > 0 && Enemy->stats.hp <= 0) {
+        printf("\nYou defeated the Fire Wolf! Cave is cleared!\n");
+    }
 }
+
 
 /**
  * @brief Starts a Mad Bunny battle in the forest
@@ -215,6 +252,9 @@ void visitCave(Player* Hero, Opponent* Enemy) {
 void visitForest(Player* Hero, Opponent* Enemy) {
     printf("\nYou have entered the Forest!\n");
     printf("You've encountered a Mad Bunny!\n");
+
+    // Shows the Mad Bunny artwork
+    assets(1);
 
     // Set the enemy and start combat
     monster(Enemy, 1);
@@ -237,14 +277,34 @@ void playerWorld(Player* Hero, Opponent* Enemy) {
         if (choice == 1) {
             // Pass the player's stats and items to the village
             visitVillage(Hero);
-        } else if (choice == 2) {
+        } 
+        else if (choice == 2) {
             visitForest(Hero, Enemy);
+            // Check if the player lost the Forest battle
+            if (Hero->stats.hp <= 0) {
+                printf("\nYou have been defeated!\n");
+                printf("You wake up at the Village Inn.\n");
+
+                // Restore HP and MP
+                Hero->stats.hp = Hero->stats.max_hp;
+                Hero->stats.mp = Hero->stats.max_mp;
+
+                printf("Your HP and MP have been restored!\n");
+            }
+
         } else if (choice == 3) {
             visitCave(Hero, Enemy);
-        } else if (choice == 0) {
-            printf("Thanks for playing!\n");
-        } else {
-            printf("Invalid choice. Try again.\n");
-        }
+            // Check if the player lost the Cave battle
+            if (Hero->stats.hp <= 0) {
+                printf("\nYou have been defeated!\n");
+                printf("You wake up at the Village Inn.\n");
+
+                // Restore HP and MP
+                Hero->stats.hp = Hero->stats.max_hp;
+                Hero->stats.mp = Hero->stats.max_mp;
+
+                printf("Your HP and MP have been restored!\n");
+            }
     }
+}
 }

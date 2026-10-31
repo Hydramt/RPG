@@ -1,6 +1,6 @@
 /**
  * @file RPG_Main.c
- * @author Gavin O. +
+ * @author Gavin O. , Aniel S.
  * @brief RPG_Game
  * @version 0.1
  * @date 2026-10-15
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "RPG_World.h"
 
 int main(void) {
 
@@ -33,6 +34,7 @@ int main(void) {
     Hero.stats.temp_def = 0;
     Hero.stats.lvl = 1;
     Hero.stats.exp = 0;
+    Hero.stats.gold = 50;
 
     // Set Hero's Buffs/Debuffs starting at 0
     Hero.buff.stone_skin = 0;
@@ -109,80 +111,14 @@ int main(void) {
     Enemy.gimmick.burn_absorb = 0;
     Enemy.gimmick.poison_heal = 0;
 
-    // Set win condition
-    int win = 0;
-    while (win == 0) {
-        // Set random
-        srand(time(NULL));
+    // Set random numbers for the game
+    srand(time(NULL));
 
-        // the main function that will allow the player to choose options
-        int player_choice;
+    // Start the World Menu
+    playerWorld(&Hero, &Enemy);
 
-        // function that tells if you ran away
-        int cowardice = 0;
+    // Goodbye message when the player exits
+    printf("\nThanks for playing! See you next time! :)\n");
 
-        printf("Choose your difficulty\n");
-        printf("1. Easy\n");
-        printf("2. Medium\n");
-        printf("3. Hard\n");
-        scanf("%d", &player_choice);
-
-        if (player_choice == 1) {
-            monster(&Enemy, 1);
-        } else if (player_choice == 2) {
-            monster(&Enemy, 2);
-        } else if (player_choice == 3) {
-            monster(&Enemy, 5);
-        } else {
-            printf("Incorrect input\n");
-            printf("Please try again\n");
-        }
-
-        // Enemy intro message
-        // If Mad Bunny
-        if (Enemy.stats.enemy_type == 1) {
-            printf("The Mad Bunny attacks!\n");
-            assets(1);
-        }
-
-        // If Fire Wolf
-        else if (Enemy.stats.enemy_type == 2) {
-            printf("The Fire Wolf attacks!\n");
-            assets(4);
-        }
-
-        // If Slime
-        else if (Enemy.stats.enemy_type == 3) {
-            // One Slime
-            if (Enemy.gimmick.multiply == 1) {
-                printf("A Slime attacks!\n");
-                assets(6);
-            }
-            // Two Slimes
-            else if (Enemy.gimmick.multiply == 2) {
-                printf("Two Slimes attack!\n");
-                assets(7);
-            }
-            // More Slimes
-            else {
-                printf("A horde of Slimes attack!\n");
-                assets(8);
-            }
-        }
-
-        // If Ice Stag
-        else if (Enemy.stats.enemy_type == 4) {
-            printf("The Ice Stag attacks!\n");
-            assets(9);
-        }
-
-        // The combat loop
-        cowardice = combat(&Hero, &Enemy, cowardice);
-
-        // if you killed the Enemy and didn't run away you win!
-        if (Enemy.stats.hp <= 0 && cowardice > 0) {
-            printf("You Win!");
-            win = 1;
-        }
-    }
+    return 0;
 }

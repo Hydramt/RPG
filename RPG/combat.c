@@ -60,6 +60,9 @@ int combat(
     // check the hero and the Enemy are alive
     while (Hero->stats.hp > 0 && Enemy->stats.hp > 0) {
 
+        //Reset spell count for each combat turn
+        magic_check = 0;
+
         // Determine number of spells
         while (magic_check == 0 && count != 10) {
             if (Hero->spell.spell_id[count] == 0) {
@@ -85,6 +88,7 @@ int combat(
         // Check if the enemy is alive
         if (Enemy->stats.hp != 0) {
             // If it is the player makes a choice
+            printf("Enter your choice: ");
             scanf("%d", &player_choice);
         }
 
@@ -113,6 +117,7 @@ int combat(
                 printf("%d. Back\n", count);
 
                 // Allow the hero to make a choice
+                printf("Enter your choice: ");
                 scanf("%d", &player_choice);
 
                 // Check if they chose back
@@ -181,6 +186,7 @@ int combat(
                     // Print Back before offering a choice
                     count++;
                     printf("%d. Back\n", count);
+                    printf("Enter your choice: ");
                     scanf("%d", &player_choice);
                 }
 
@@ -261,6 +267,11 @@ int combat(
             // They run away with cowardice
             cowardice = 0;
             return 0;
+        }
+
+        // If player enters an invalid choice
+        else {
+            printf("\nInvalid Choice! Please enter a number 1-4.\n\n");
         }
 
         // Check if the Hero attacked

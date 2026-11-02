@@ -310,5 +310,7 @@ int combat(
             Enemy->stats.temp_def = 0;
         }
     }
+    exp_reward(Enemy);
+    level_up(Hero, Enemy);
     return 1;
 }

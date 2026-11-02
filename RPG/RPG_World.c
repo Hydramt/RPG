@@ -7,10 +7,10 @@
  */
 
 #include "RPG_World.h"
-#include "RPG_Subfunctions.h"
-#include <stdio.h>
 #include "RPG_Assets.h"
+#include "RPG_Subfunctions.h"
 #include "quest.h"
+#include <stdio.h>
 
 // Stores the player's quests and their progress
 Quest QuestLog[Max_Quest] = {0};
@@ -60,7 +60,15 @@ void showShopMenu(void) {
     printf("2. Buy MP Potion - 10 Gold\n");
     printf("3. Buy Ice Flask - 20 Gold\n");
     printf("4. Buy Cleansing Potion - 50 Gold\n");
-    printf("5. Buy Spell Scroll\n");
+    printf("5. Buy Spell Scroll: Check - 200 Gold\n");
+    printf("6. Buy Spell Scroll: FireBolt - 200 Gold\n");
+    printf("7. Buy Spell Scroll: Stone Skin - 200 Gold\n");
+    printf("8. Buy Spell Scroll: Poison Shot - 200 Gold\n");
+    printf("9. Buy Spell Scroll: Icy Spray - 200 Gold\n");
+    printf("10. Buy Spell Scroll: Inner Fire - 200 Gold\n");
+    printf("11. Buy Spell Scroll: Slime Shot - 200 Gold\n");
+    printf("12. Buy Spell Scroll: Magic Missile - 200 Gold\n");
+    printf("13. Buy Spell Scroll: Heal - 200 Gold\n");
     printf("0. Leave Shop\n");
     printf("Choose an option: ");
 }
@@ -95,6 +103,7 @@ void buyShopItem(Player* const Hero, int itemID, int price) {
     for (int i = 0; i < 10; i++) {
         if (Hero->item.item_id[i] == 0) {
             Hero->item.item_id[i] = itemID;
+            Hero->item.item_id[i + 1] = 0;
             Hero->item.item_amount[i] = 1;
             Hero->item.item_stackable[i] = 1;
 
@@ -132,26 +141,22 @@ void visitShop(Player* const Hero) {
             buyShopItem(Hero, 4, 50);
         } else if (shopChoice == 5) {
             buyShopItem(Hero, 5, 200);
-        } else if (shopChoice == 5) {
+        } else if (shopChoice == 6) {
             buyShopItem(Hero, 6, 200);
-        } else if (shopChoice == 5) {
+        } else if (shopChoice == 7) {
             buyShopItem(Hero, 7, 200);
-        } else if (shopChoice == 5) {
+        } else if (shopChoice == 8) {
             buyShopItem(Hero, 8, 50);
-        } else if (shopChoice == 5) {
+        } else if (shopChoice == 9) {
             buyShopItem(Hero, 9, 200);
-        } else if (shopChoice == 5) {
+        } else if (shopChoice == 10) {
             buyShopItem(Hero, 10, 200);
-        } else if (shopChoice == 5) {
+        } else if (shopChoice == 11) {
             buyShopItem(Hero, 11, 200);
-        } else if (shopChoice == 5) {
+        } else if (shopChoice == 12) {
             buyShopItem(Hero, 12, 200);
-        } else if (shopChoice == 5) {
+        } else if (shopChoice == 13) {
             buyShopItem(Hero, 13, 200);
-        } else if (shopChoice == 5) {
-            buyShopItem(Hero, 14, 200);
-        } else if (shopChoice == 5) {
-            buyShopItem(Hero, 15, 200);
         } else if (shopChoice == 0) {
             printf("You left the Shop.\n");
         } else {
@@ -172,8 +177,8 @@ void visitQuestBoard(void) {
     printf("Choose an option: ");
 
     scanf("%d", &questChoice);
-    
-    // Accept the fire wolf quest 
+
+    // Accept the fire wolf quest
     if (questChoice == 1) {
         acceptQuest(1, QuestLog);
 
@@ -225,10 +230,10 @@ void visitCave(Player* Hero, Opponent* Enemy) {
 
     // First battle: First Slime
     printf("A Slime appears!\n");
-    
+
     // Shows First Slime artwork
     assets(6);
-    
+
     monster(Enemy, 3);
     int result = combat(Hero, Enemy, 0);
 
@@ -239,10 +244,10 @@ void visitCave(Player* Hero, Opponent* Enemy) {
 
     // Second battle: Second Slimes
     printf("\nYou've encounter 2 slimes and it's blocking your path!\n");
-    
-    // Shows Second Slimes artwork 
+
+    // Shows Second Slimes artwork
     assets(7);
-   
+
     monster(Enemy, 4);
     result = combat(Hero, Enemy, 0);
 
@@ -252,10 +257,10 @@ void visitCave(Player* Hero, Opponent* Enemy) {
 
     // Final battle: Fire Wolf boss
     printf("\nThe Fire Wolf boss appears!\n");
-    
+
     // Shows Fire Wolf artwork
     assets(4);
-   
+
     monster(Enemy, 2);
     result = combat(Hero, Enemy, 0);
 
@@ -268,7 +273,6 @@ void visitCave(Player* Hero, Opponent* Enemy) {
         }
     }
 }
-
 
 /**
  * @brief Starts a Mad Bunny battle in the forest
@@ -304,8 +308,7 @@ void playerWorld(Player* Hero, Opponent* Enemy) {
         if (choice == 1) {
             // Pass the player's stats and items to the village
             visitVillage(Hero);
-        } 
-        else if (choice == 2) {
+        } else if (choice == 2) {
             visitForest(Hero, Enemy);
             // Check if the player lost the Forest battle
             if (Hero->stats.hp <= 0) {
@@ -332,6 +335,6 @@ void playerWorld(Player* Hero, Opponent* Enemy) {
 
                 printf("Your HP and MP have been restored!\n");
             }
+        }
     }
-}
 }

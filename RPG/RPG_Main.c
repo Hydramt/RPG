@@ -10,12 +10,12 @@
  */
 #include "RPG_Assets.h"
 #include "RPG_Subfunctions.h"
+#include "RPG_World.h"
 #include "combat.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "RPG_World.h"
 
 int main(void) {
 
@@ -34,7 +34,7 @@ int main(void) {
     Hero.stats.temp_def = 0;
     Hero.stats.lvl = 1;
     Hero.stats.exp = 0;
-    Hero.stats.gold = 50;
+    Hero.stats.gold = 500;
 
     // Set Hero's Buffs/Debuffs starting at 0
     Hero.buff.stone_skin = 0;
@@ -82,7 +82,7 @@ int main(void) {
     // Stackable = Yes
     Hero.item.item_stackable[2] = 1;
     // Item amount 1
-    Hero.item.item_amount[2] = 1;
+    Hero.item.item_amount[2] = 100;
 
     // Empty
     Hero.item.item_id[3] = 0;

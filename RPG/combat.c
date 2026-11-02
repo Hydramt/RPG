@@ -54,13 +54,12 @@ int combat(
             count++;
         }
     }
-    item_check = count;
     count = 0;
 
     // check the hero and the Enemy are alive
     while (Hero->stats.hp > 0 && Enemy->stats.hp > 0) {
 
-        //Reset spell count for each combat turn
+        // Reset spell count for each combat turn
         magic_check = 0;
 
         // Determine number of spells
@@ -177,6 +176,7 @@ int combat(
 
                 // Check if out of items
                 if (count == 0) {
+                    printf("Test\n");
                     printf("No items left\n");
                     input_sticker = 0;
                     player_choice = 0;

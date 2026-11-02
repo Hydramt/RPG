@@ -206,7 +206,7 @@ const char* items(
                 }
             }
             break;
-        case 11:
+        case 10:
             if (description == 0) {
                 return "Spell Scroll: Inner Fire";
             } else {
@@ -231,7 +231,7 @@ const char* items(
                 }
             }
             break;
-        case 12:
+        case 11:
             if (description == 0) {
                 return "Spell Scroll: Slime Shot";
             } else {
@@ -256,7 +256,7 @@ const char* items(
                 }
             }
             break;
-        case 13:
+        case 12:
             if (description == 0) {
                 return "Spell Scroll: Magic Missile";
             } else {
@@ -281,7 +281,7 @@ const char* items(
                 }
             }
             break;
-        case 14:
+        case 13:
             if (description == 0) {
                 return "Spell Scroll: Heal";
             } else {

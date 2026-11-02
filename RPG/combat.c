@@ -1,6 +1,7 @@
 #include "combat.h"
 #include "RPG_Assets.h"
 #include "RPG_Subfunctions.h"
+#include "leveling.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -310,7 +311,7 @@ int combat(
             Enemy->stats.temp_def = 0;
         }
     }
-    exp_reward(Enemy);
+    Hero->stats.exp = exp_reward(Enemy);
     level_up(Hero, Enemy);
     return 1;
 }

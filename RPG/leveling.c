@@ -10,7 +10,6 @@
  */
 
 #include "RPG_Subfunctions.h"
-#include "leveling.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,19 +39,19 @@ int exp_reward(
     switch (Enemy->stats.enemy_type) {
         // Mad Bunny
         case 1:
-            reward = 10;
+            return 10;
             break;
         // Fire Wolf (Boss)
         case 2:
-            reward = 50;
+            return 50;
             break;
         // Slime (8 exp for each Slime)
         case 3:
-            reward = 8 * (Enemy->stats.max_hp / 20);
+            return 8 * (Enemy->stats.max_hp / 20);
             break;
         // Icy Stag
         case 4:
-            reward = 30;
+            return 30;
             break;
     }
 
@@ -119,9 +118,7 @@ int level_up(
     }
     // Otherwise print how much exp is left
     else {
-        printf(
-            "Exp: %d/%d\n", Hero->stats.exp, exp_needed(Hero->stats.lvl)
-        );
+        printf("Exp: %d/%d\n", Hero->stats.exp, exp_needed(Hero->stats.lvl));
     }
 
     return leveled;

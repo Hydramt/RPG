@@ -10,6 +10,10 @@
 #include "RPG_Subfunctions.h"
 #include <stdio.h>
 #include "RPG_Assets.h"
+#include "quest.h"
+
+// Stores the player's quests and their progress
+Quest QuestLog[Max_Quest] = {0};
 
 /**
  * @brief Show the world menu.
@@ -160,9 +164,24 @@ void visitShop(Player* const Hero) {
  * @brief Lets the player check the quest board.
  */
 void visitQuestBoard(void) {
-    // Quests will be added later
+    int questChoice;
+
     printf("\n=== QUEST BOARD ===\n");
-    printf("The Quest Board is being prepared.\n");
+    printf("1. Accept Slay Fire Wolf Quest\n");
+    printf("0. Back\n");
+    printf("Choose an option: ");
+
+    scanf("%d", &questChoice);
+    
+    // Accept the fire wolf quest 
+    if (questChoice == 1) {
+        acceptQuest(1, QuestLog);
+
+    } else if (questChoice == 0) {
+        printf("You left the Quest Board.\n");
+    } else {
+        printf("Invalid quest option.\n");
+    }
 }
 
 /**
@@ -242,6 +261,11 @@ void visitCave(Player* Hero, Opponent* Enemy) {
 
     if (result != 0 && Hero->stats.hp > 0 && Enemy->stats.hp <= 0) {
         printf("\nYou defeated the Fire Wolf! Cave is cleared!\n");
+
+        // Complete the quest if the player accepted it
+        if (QuestLog[0].state == Quest_Active) {
+            completeQuest(1, &Hero->stats.gold, QuestLog);
+        }
     }
 }
 
@@ -267,6 +291,9 @@ void visitForest(Player* Hero, Opponent* Enemy) {
 void playerWorld(Player* Hero, Opponent* Enemy) {
 
     int choice = -1;
+
+    // Load the quests when the game starts
+    initQuest(QuestLog);
 
     // Keep showing the world menu until the player exits
     while (choice != 0) {

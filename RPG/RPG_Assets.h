@@ -9,6 +9,9 @@
  *
  */
 
+#ifndef Assests_H
+#define Assests_H
+
 /**
  * @brief Message that happens when a monster dies
  *
@@ -24,3 +27,5 @@ int death(int type);
  * @return Printed assets
  */
 int assets(int grab);
+
+#endif

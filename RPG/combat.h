@@ -8,6 +8,10 @@
  * @copyright Copyright (c) 2026
  *
  */
+
+#ifndef combat_H
+#define combat_H
+
 #include "RPG_Assets.h"
 #include "RPG_Subfunctions.h"
 
@@ -20,3 +24,5 @@
  * @return int
  */
 int combat(Player* const Hero, Opponent* const Enemy, int cowardice);
+
+#endif

@@ -23,6 +23,6 @@
  * @param cowardice Whether or not you run away
  * @return int
  */
-int combat(Player* const Hero, Opponent* const Enemy, int cowardice);
+int combat(World* const Game);
 
 #endif

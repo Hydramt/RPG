@@ -26,11 +26,7 @@ const char* items(
     /**
      * @brief The Structure to contain the player character
      */
-    Player* const Hero,
-    /**
-     * @brief The Structure to contain the enemy
-     */
-    Opponent* const Enemy
+    World* const Game
 ) {
     // Checks list of spells for names and effects
 
@@ -41,7 +37,7 @@ const char* items(
                 return "Hp Potion";
             } else {
                 // Heal 30
-                Hero->stats.temp_atk = -30;
+                Game->Hero.stats.temp_atk = -30;
             }
             break;
         case 2:
@@ -49,9 +45,9 @@ const char* items(
                 return "Mp Potion";
             } else {
                 // Restore 30 mp (Have a message)
-                Hero->stats.mp = Hero->stats.mp + 30;
-                if (Hero->stats.mp > Hero->stats.max_mp) {
-                    Hero->stats.mp = Hero->stats.max_mp;
+                Game->Hero.stats.mp = Game->Hero.stats.mp + 30;
+                if (Game->Hero.stats.mp > Game->Hero.stats.max_mp) {
+                    Game->Hero.stats.mp = Game->Hero.stats.max_mp;
                     printf("The Hero restored their Mp to Max\n");
                 } else {
                     printf("The Hero restored 30Mp\n");
@@ -63,9 +59,9 @@ const char* items(
                 return "Ice Flask";
             } else {
                 // Deal 15 damage
-                Hero->stats.temp_atk = 15;
+                Game->Hero.stats.temp_atk = 15;
 
-                Enemy->debuff.chill += 5;
+                Game->Enemy.debuff.chill += 5;
             }
             break;
         case 4:
@@ -73,13 +69,13 @@ const char* items(
                 return "Cleansing Potion";
             } else {
                 // Remove Debuffs and Buffs
-                Hero->debuff.burn = 0;
-                Hero->debuff.chill = 0;
-                Hero->debuff.poison = 0;
-                Hero->debuff.slime = 0;
-                Hero->buff.frenzy = 0;
-                Hero->buff.stone_skin = 0;
-                Hero->buff.cleanse += 5;
+                Game->Hero.debuff.burn = 0;
+                Game->Hero.debuff.chill = 0;
+                Game->Hero.debuff.poison = 0;
+                Game->Hero.debuff.slime = 0;
+                Game->Hero.buff.frenzy = 0;
+                Game->Hero.buff.stone_skin = 0;
+                Game->Hero.buff.cleanse += 5;
             }
             break;
         case 5:
@@ -88,12 +84,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 1;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 1;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;
@@ -113,12 +109,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 2;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 2;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;
@@ -137,12 +133,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 3;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 3;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;
@@ -162,12 +158,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 4;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 4;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;
@@ -187,12 +183,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 5;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 5;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;
@@ -212,12 +208,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 6;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 6;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;
@@ -237,12 +233,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 7;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 7;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;
@@ -262,12 +258,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 8;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 8;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;
@@ -287,12 +283,12 @@ const char* items(
             } else {
                 int count = 0;
                 for (int i = 0; i < 10; i++) {
-                    if (Hero->spell.spell_id[i] == 0) {
-                        Hero->spell.spell_id[i] = 9;
-                        Hero->spell.spell_lvl[i] = 0;
-                        Hero->spell.spell_type[i] = 0;
+                    if (Game->Hero.spell.spell_id[i] == 0) {
+                        Game->Hero.spell.spell_id[i] = 9;
+                        Game->Hero.spell.spell_lvl[i] = 0;
+                        Game->Hero.spell.spell_type[i] = 0;
                         if (i != 10) {
-                            Hero->spell.spell_id[i + 1] = 0;
+                            Game->Hero.spell.spell_id[i + 1] = 0;
                             i = 10;
                         } else {
                             count++;

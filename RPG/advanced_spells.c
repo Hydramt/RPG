@@ -58,26 +58,22 @@ const char* spells(
     /**
      * @brief The Structure to contain the player character
      */
-    Player* const Hero,
-    /**
-     * @brief The Structure to contain the enemy
-     */
-    Opponent* const Enemy
+    World* const Game
 ) {
     // Checks list of spells for names and effects
 
-    switch (Hero->spell.spell_lvl[spell_slot]) {
+    switch (Game->Hero.spell.spell_lvl[spell_slot]) {
         case 0:
-            switch (Hero->spell.spell_id[spell_slot]) {
+            switch (Game->Hero.spell.spell_id[spell_slot]) {
                 case 1:
                     // Spell Name Check
                     if (description == 0) {
                         return "Check";
                     } else {
                         // Drink 5 mana
-                        Hero->stats.mp = Hero->stats.mp - 5;
-                        Hero->stats.temp_atk = 0;
-                        check(Enemy->stats.enemy_type);
+                        Game->Hero.stats.mp = Game->Hero.stats.mp - 5;
+                        Game->Hero.stats.temp_atk = 0;
+                        check(Game->Enemy.stats.enemy_type);
                     }
                     break;
                 case 2:
@@ -86,13 +82,14 @@ const char* spells(
                         return "Firebolt";
                     } else {
                         // Deal 15 damage
-                        Hero->stats.temp_atk = 15;
+                        Game->Hero.stats.temp_atk = 15;
                         // Drink 10 mana
-                        Hero->stats.mp = Hero->stats.mp - 10;
+                        Game->Hero.stats.mp = Game->Hero.stats.mp - 10;
 
                         // 33% chance to burn for 3 turns
                         if (rand() % 3 > 1) {
-                            Enemy->debuff.burn = Enemy->debuff.burn + 3;
+                            Game->Enemy.debuff.burn =
+                                Game->Enemy.debuff.burn + 3;
                         }
                     }
                     break;
@@ -102,9 +99,10 @@ const char* spells(
                         return "Stone Skin";
                     } else {
                         // Get Stone Skin for 4 turns
-                        Hero->buff.stone_skin = Hero->buff.stone_skin + 4;
+                        Game->Hero.buff.stone_skin =
+                            Game->Hero.buff.stone_skin + 4;
                         // Drink 20 mana
-                        Hero->stats.mp = Hero->stats.mp - 20;
+                        Game->Hero.stats.mp = Game->Hero.stats.mp - 20;
                     }
                     break;
                 case 4:
@@ -113,12 +111,13 @@ const char* spells(
                         return "Poison Shot";
                     } else {
                         // Deal 5 damage
-                        Hero->stats.temp_atk = 5;
+                        Game->Hero.stats.temp_atk = 5;
                         // Drink 10 mana
-                        Hero->stats.mp = Hero->stats.mp - 10;
+                        Game->Hero.stats.mp = Game->Hero.stats.mp - 10;
 
                         // Applies 3 poison
-                        Enemy->debuff.poison = Enemy->debuff.poison + 3;
+                        Game->Enemy.debuff.poison =
+                            Game->Enemy.debuff.poison + 3;
                     }
                     break;
                 case 5:
@@ -127,12 +126,12 @@ const char* spells(
                         return "Ice Spray";
                     }
                     // Deal 5 damage
-                    Hero->stats.temp_atk = 5;
+                    Game->Hero.stats.temp_atk = 5;
                     // Drink 10 mana
-                    Hero->stats.mp = Hero->stats.mp - 15;
+                    Game->Hero.stats.mp = Game->Hero.stats.mp - 15;
 
                     // Apply 4 Chill
-                    Enemy->debuff.chill += 4;
+                    Game->Enemy.debuff.chill += 4;
                     break;
                 case 6:
                     // Spell Name Inner Fire
@@ -140,11 +139,11 @@ const char* spells(
                         return "Inner Fire";
                     }
                     // Drink 10 mana
-                    Hero->stats.mp = Hero->stats.mp - 10;
+                    Game->Hero.stats.mp = Game->Hero.stats.mp - 10;
                     // Add 4 Frenzy
-                    Hero->buff.frenzy += 4;
+                    Game->Hero.buff.frenzy += 4;
                     // Add 4 Burn
-                    Hero->debuff.burn += 4;
+                    Game->Hero.debuff.burn += 4;
                     break;
                 case 7:
                     // Spell Name Slime Shot
@@ -152,11 +151,11 @@ const char* spells(
                         return "Slime Shot";
                     }
                     // Drink 10 mana
-                    Hero->stats.mp = Hero->stats.mp - 10;
+                    Game->Hero.stats.mp = Game->Hero.stats.mp - 10;
                     // Add 5 Slime
-                    Enemy->debuff.slime += 5;
+                    Game->Enemy.debuff.slime += 5;
                     // Deal damage
-                    Hero->stats.temp_atk = 10;
+                    Game->Hero.stats.temp_atk = 10;
                     break;
                 case 8:
                     // Spell Name Magic Missile
@@ -164,9 +163,9 @@ const char* spells(
                         return "Magic Missile";
                     }
                     // Drink 5 mana
-                    Hero->stats.mp = Hero->stats.mp - 5;
+                    Game->Hero.stats.mp = Game->Hero.stats.mp - 5;
                     // Deal 20 dmg
-                    Hero->stats.temp_atk += 20;
+                    Game->Hero.stats.temp_atk += 20;
                     break;
                 case 9:
                     // Spell Name Heal
@@ -174,33 +173,33 @@ const char* spells(
                         return "Heal";
                     }
                     // Drink 10 mana
-                    Hero->stats.mp = Hero->stats.mp - 10;
+                    Game->Hero.stats.mp = Game->Hero.stats.mp - 10;
                     // Heal 20 dmg
-                    Hero->stats.temp_atk = -20;
+                    Game->Hero.stats.temp_atk = -20;
                     break;
             }
             break;
 
         // Level 1 spells
         case 1:
-            switch (Hero->spell.spell_id[spell_slot]) {
+            switch (Game->Hero.spell.spell_id[spell_slot]) {
                 case 1:
                     // Spell Name Check
                     if (description == 0) {
                         return "Check";
                     } else {
-                        Hero->stats.temp_atk = 0;
-                        check(Enemy->stats.enemy_type);
-                        Hero->stats.mp += 5;
-                        if (Hero->stats.mp > Hero->stats.max_mp) {
-                            Hero->stats.mp = Hero->stats.max_mp;
+                        Game->Hero.stats.temp_atk = 0;
+                        check(Game->Enemy.stats.enemy_type);
+                        Game->Hero.stats.mp += 5;
+                        if (Game->Hero.stats.mp > Game->Hero.stats.max_mp) {
+                            Game->Hero.stats.mp = Game->Hero.stats.max_mp;
                         }
                     }
                     break;
 
                 // Firebolt evolutions
                 case 2:
-                    switch (Hero->spell.spell_type[spell_slot]) {
+                    switch (Game->Hero.spell.spell_type[spell_slot]) {
 
                         // Greater Firebolt Spell
                         case 1:
@@ -208,13 +207,14 @@ const char* spells(
                                 return "Greater Firebolt";
                             } else {
                                 // Deal 25 damage
-                                Hero->stats.temp_atk = 25;
+                                Game->Hero.stats.temp_atk = 25;
                                 // Drink 15 mana
-                                Hero->stats.mp = Hero->stats.mp - 15;
+                                Game->Hero.stats.mp = Game->Hero.stats.mp - 15;
 
                                 // 50% chance to burn for 5 turns
                                 if (rand() % 2 > 1) {
-                                    Enemy->debuff.burn = Enemy->debuff.burn + 5;
+                                    Game->Enemy.debuff.burn =
+                                        Game->Enemy.debuff.burn + 5;
                                 }
                             }
                             break;
@@ -225,11 +225,12 @@ const char* spells(
                                 return "Pyre";
                             } else {
                                 // Deal 15 damage
-                                Hero->stats.temp_atk = 15;
+                                Game->Hero.stats.temp_atk = 15;
                                 // Drink 10 mana
-                                Hero->stats.mp = Hero->stats.mp - 10;
+                                Game->Hero.stats.mp = Game->Hero.stats.mp - 10;
                                 // Apply 10 burn
-                                Enemy->debuff.burn = Enemy->debuff.burn + 10;
+                                Game->Enemy.debuff.burn =
+                                    Game->Enemy.debuff.burn + 10;
                             }
                             break;
 
@@ -239,11 +240,12 @@ const char* spells(
                                 return "Fire Ball";
                             } else {
                                 // Deal 30 damage
-                                Hero->stats.temp_atk = 30;
+                                Game->Hero.stats.temp_atk = 30;
                                 // Drink 25 mana
-                                Hero->stats.mp = Hero->stats.mp - 25;
+                                Game->Hero.stats.mp = Game->Hero.stats.mp - 25;
                                 // Apply 2 burn
-                                Enemy->debuff.burn = Enemy->debuff.burn + 2;
+                                Game->Enemy.debuff.burn =
+                                    Game->Enemy.debuff.burn + 2;
                             }
                             break;
                     }
@@ -251,7 +253,7 @@ const char* spells(
 
                 // Stone Skin evolutions
                 case 3:
-                    switch (Hero->spell.spell_type[spell_slot]) {
+                    switch (Game->Hero.spell.spell_type[spell_slot]) {
 
                         // Greater Stone Skin
                         case 1:
@@ -259,10 +261,10 @@ const char* spells(
                                 return "Greater Stone Skin";
                             } else {
                                 // Get Stone Skin for 8 turns
-                                Hero->buff.stone_skin =
-                                    Hero->buff.stone_skin + 8;
+                                Game->Hero.buff.stone_skin =
+                                    Game->Hero.buff.stone_skin + 8;
                                 // Drink 15 mana
-                                Hero->stats.mp = Hero->stats.mp - 15;
+                                Game->Hero.stats.mp = Game->Hero.stats.mp - 15;
                             }
                             break;
 
@@ -272,9 +274,10 @@ const char* spells(
                                 return "Iron Skin";
                             } else {
                                 // Get Iron Skin for 3 turns
-                                Hero->buff.iron_skin = Hero->buff.iron_skin + 3;
+                                Game->Hero.buff.iron_skin =
+                                    Game->Hero.buff.iron_skin + 3;
                                 // Drink 30 mana
-                                Hero->stats.mp = Hero->stats.mp - 30;
+                                Game->Hero.stats.mp = Game->Hero.stats.mp - 30;
                             }
                             break;
 
@@ -284,16 +287,16 @@ const char* spells(
                                 return "Lava Skin";
                             } else {
                                 // Get Stone Skin for 4 turns
-                                Hero->buff.stone_skin =
-                                    Hero->buff.stone_skin + 4;
+                                Game->Hero.buff.stone_skin =
+                                    Game->Hero.buff.stone_skin + 4;
                                 // Get Frenzy for 3 turns
-                                Hero->buff.frenzy += 3;
+                                Game->Hero.buff.frenzy += 3;
                                 // Get Burn for 3 turns
-                                Hero->debuff.burn += 3;
+                                Game->Hero.debuff.burn += 3;
                                 // Enemy gets Burn for 6 turns
-                                Enemy->debuff.burn += 6;
+                                Game->Enemy.debuff.burn += 6;
                                 // Drink 40 mana
-                                Hero->stats.mp = Hero->stats.mp - 40;
+                                Game->Hero.stats.mp = Game->Hero.stats.mp - 40;
                             }
                             break;
                     }
@@ -301,7 +304,7 @@ const char* spells(
 
                 // Poison shot evolutions
                 case 4:
-                    switch (Hero->spell.spell_type[spell_slot]) {
+                    switch (Game->Hero.spell.spell_type[spell_slot]) {
 
                         // Greater Poison Shot
                         case 1:
@@ -309,11 +312,12 @@ const char* spells(
                                 return "Greater Poison Shot";
                             } else {
                                 // Deal 10 damage
-                                Hero->stats.temp_atk = 10;
+                                Game->Hero.stats.temp_atk = 10;
                                 // Drink 15 mana
-                                Hero->stats.mp = Hero->stats.mp - 15;
+                                Game->Hero.stats.mp = Game->Hero.stats.mp - 15;
                                 // Applies 6 poison
-                                Enemy->debuff.poison = Enemy->debuff.poison + 6;
+                                Game->Enemy.debuff.poison =
+                                    Game->Enemy.debuff.poison + 6;
                             }
                             break;
 
@@ -323,13 +327,13 @@ const char* spells(
                                 return "Gunk Shot";
                             } else {
                                 // Deal 10 damage
-                                Hero->stats.temp_atk = 5;
+                                Game->Hero.stats.temp_atk = 5;
                                 // Drink 15 mana
-                                Hero->stats.mp = Hero->stats.mp - 15;
+                                Game->Hero.stats.mp = Game->Hero.stats.mp - 15;
                                 // Applies 4 poison
-                                Enemy->debuff.poison += 4;
+                                Game->Enemy.debuff.poison += 4;
                                 // Applies 4 slime
-                                Enemy->debuff.slime += 4;
+                                Game->Enemy.debuff.slime += 4;
                             }
                             break;
                     }
@@ -337,19 +341,19 @@ const char* spells(
 
                 // Ice Spray Evolutions
                 case 5:
-                    switch (Hero->spell.spell_type[spell_slot]) {
+                    switch (Game->Hero.spell.spell_type[spell_slot]) {
                         // Spell Name Greater Ice Spray
                         case 1:
                             if (description == 0) {
                                 return "Greater Ice Spray";
                             }
                             // Deal 10 damage
-                            Hero->stats.temp_atk = 10;
+                            Game->Hero.stats.temp_atk = 10;
                             // Drink 10 mana
-                            Hero->stats.mp = Hero->stats.mp - 10;
+                            Game->Hero.stats.mp = Game->Hero.stats.mp - 10;
 
                             // Apply 6 Chill
-                            Enemy->debuff.chill += 6;
+                            Game->Enemy.debuff.chill += 6;
                             break;
 
                         // Spell Name Blizzard
@@ -358,12 +362,12 @@ const char* spells(
                                 return "Blizzard";
                             }
                             // Deal 25 damage
-                            Hero->stats.temp_atk = 25;
+                            Game->Hero.stats.temp_atk = 25;
                             // Drink 20 mana
-                            Hero->stats.mp = Hero->stats.mp - 20;
+                            Game->Hero.stats.mp = Game->Hero.stats.mp - 20;
 
                             // Apply 4 Chill
-                            Enemy->debuff.chill += 4;
+                            Game->Enemy.debuff.chill += 4;
                             break;
 
                         // Spell Name Ice Spike
@@ -372,9 +376,9 @@ const char* spells(
                                 return "Ice Spike";
                             }
                             // Deal 25 damage
-                            Hero->stats.temp_atk = 35;
+                            Game->Hero.stats.temp_atk = 35;
                             // Drink 20 mana
-                            Hero->stats.mp = Hero->stats.mp - 30;
+                            Game->Hero.stats.mp = Game->Hero.stats.mp - 30;
                             break;
                     }
                     break;

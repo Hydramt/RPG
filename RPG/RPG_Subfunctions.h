@@ -9,6 +9,9 @@
  *
  */
 
+#ifndef RPG_Subfunctions_H
+#define RPG_Subfunctions_H
+
 /**
  * @brief How many turns of what buffs you have
  */
@@ -110,7 +113,7 @@ typedef struct spells {
     /**
      * @brief Which spell it is
      */
-    int spell_id[10];
+    int spell_id[11];
     /**
      * @brief The level of the spell
      */
@@ -128,7 +131,7 @@ typedef struct items {
     /**
      * @brief Which item it is
      */
-    int item_id[10];
+    int item_id[11];
     /**
      * @brief If the item can stack
      */
@@ -305,3 +308,5 @@ int exp_reward(Opponent* const Enemy);
  * @return 1 if the Hero leveled up, 0 if not
  */
 int level_up(Player* const Hero, Opponent* const Enemy);
+
+#endif

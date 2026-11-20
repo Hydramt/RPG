@@ -61,6 +61,7 @@ int main(void) {
     Hero.spell.spell_lvl[3] = 0;
     // Empty
     Hero.spell.spell_id[4] = 0;
+    Hero.spell.spell_id[10] = 0;
 
     // Set the starting items
     // Hp potion
@@ -90,6 +91,9 @@ int main(void) {
     Hero.item.item_stackable[3] = 0;
     // Item amount 0
     Hero.item.item_amount[3] = 0;
+
+    // Empty
+    Hero.item.item_id[10] = 0;
 
     /**
      * @brief The structure to contain the Enemy

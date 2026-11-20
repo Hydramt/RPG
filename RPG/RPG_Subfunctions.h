@@ -145,7 +145,7 @@ typedef struct items {
 /**
  * @brief The player character
  */
-typedef struct player {
+typedef struct {
     Hero_Stats stats;
     Buffs buff;
     Debuffs debuff;
@@ -216,12 +216,17 @@ typedef struct gimmick {
 /**
  * @brief The Enemy
  */
-typedef struct opponent {
+typedef struct {
     Enemy_Stats stats;
     Buffs buff;
     Debuffs debuff;
     Gimmick gimmick;
 } Opponent;
+
+typedef struct {
+    Opponent Enemy;
+    Player Hero;
+} World;
 
 /**
  * @brief Apply Buffs and Debuffs. Then Decrease them
@@ -230,7 +235,7 @@ typedef struct opponent {
  * @param Hero The Structure to hold the Player
  * @return Buff and Debuff damage and effects
  */
-int buffs_debuffs(Player* const Hero, Opponent* const Enemy);
+int buffs_debuffs(World* const Game);
 
 /**
  * @brief How the Enemy makes decisions and attacks
@@ -239,7 +244,7 @@ int buffs_debuffs(Player* const Hero, Opponent* const Enemy);
  * @param Hero The Structure to hold the Player
  * @return Enemy damage and effects
  */
-int enemy_ai(Player* const Hero, Opponent* const Enemy);
+int enemy_ai(World* const Game);
 
 /**
  * @brief How the Hero deals damage and inflicts effects
@@ -248,7 +253,7 @@ int enemy_ai(Player* const Hero, Opponent* const Enemy);
  * @param Hero The Structure to hold the Player
  * @return Hero damage and effects
  */
-int damage_calculator(Player* const Hero, Opponent* const Enemy);
+int damage_calculator(World* const Game);
 
 /**
  * @brief Calling spells for when the Hero casts them
@@ -259,8 +264,7 @@ int damage_calculator(Player* const Hero, Opponent* const Enemy);
  * @param Hero The Structure to hold the Player
  * @return Name of Spell or Casting of spell
  */
-const char*
-spells(int spell, int description, Player* const Hero, Opponent* const Enemy);
+const char* spells(int spell, int description, World* const Game);
 
 /**
  * @brief
@@ -271,8 +275,7 @@ spells(int spell, int description, Player* const Hero, Opponent* const Enemy);
  * @param Hero The Structure to hold the Player
  * @return Name of Item or Using of item
  */
-const char*
-items(int item, int description, Player* const Hero, Opponent* const Enemy);
+const char* items(int item, int description, World* const Game);
 
 /**
  * @brief Set Monster Stats to new Monster Stats
@@ -281,12 +284,12 @@ items(int item, int description, Player* const Hero, Opponent* const Enemy);
  * @param grab Which enemy it sets to
  * @return New Monster Stats
  */
-void monster(Opponent* const Enemy, int grab);
+void monster(World* const Game, int grab);
 
 /**
  * @brief how much exp the Hero needs to reach the next level
  *
- * @param lvl The heros current level
+ * @param lvl The hero's current level
  * @return exp needed for the next level
  */
 int exp_needed(int lvl);
@@ -297,7 +300,7 @@ int exp_needed(int lvl);
  * @param Enemy The Structure to hold the Enemy
  * @return exp the monster is worth
  */
-int exp_reward(Opponent* const Enemy);
+int exp_reward(World* const Game);
 
 /**
  * @brief Gives the Hero exp for killing a monster and levels them up the max
@@ -307,6 +310,6 @@ int exp_reward(Opponent* const Enemy);
  * @param Enemy The Structure to hold the Enemy
  * @return 1 if the Hero leveled up, 0 if not
  */
-int level_up(Player* const Hero, Opponent* const Enemy);
+int level_up(World* const Game);
 
 #endif

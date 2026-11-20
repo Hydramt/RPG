@@ -45,7 +45,7 @@ void visitQuestBoard(void);
  * @param itemID The item being purchased
  * @param price Cost of the item
  */
-void buyShopItem(Player* const Hero, int itemID, int price);
+void buyShopItem(World* Game, int itemID, int price);
 
 /**
  * @brief Opens the village shop
@@ -54,7 +54,7 @@ void buyShopItem(Player* const Hero, int itemID, int price);
  * @param itemAmounts Amount of each item
  * @param itemStackable Checks if items can stack
  */
-void visitShop(Player* const Hero);
+void visitShop(World* Game);
 
 /**
  * @brief Lets the player visit the village
@@ -67,27 +67,27 @@ void visitShop(Player* const Hero);
  * @param itemAmounts Amount of each item
  * @param itemStackable Checks if items can stack
  */
-void visitVillage(Player* const Hero);
+void visitVillage(World* Game);
 
 /**
  * @brief Starts a battle in the forest
  * @param Hero The player character
  * @param Enemy The current enemy
  */
-void visitForest(Player* Hero, Opponent* Enemy);
+void visitForest(World* Game);
 
 /**
  * @brief Starts a battle in the cave
  * @param Hero The player character
  * @param Enemy The current enemy
  */
-void visitCave(Player* Hero, Opponent* Enemy);
+void visitCave(World* Game);
 
 /**
  * @brief Runs the open world
  * @param Hero The player character
  * @param Enemy The current enemy
  */
-void playerWorld(Player *Hero, Opponent *Enemy);
+void playerWorld(World* Game);
 
 #endif
